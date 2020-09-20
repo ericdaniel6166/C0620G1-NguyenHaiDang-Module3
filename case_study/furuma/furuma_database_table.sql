@@ -154,11 +154,3 @@ alter table services
 add foreign key (type_of_service_id)
 references types_of_service (type_of_service_id);
 
--- Cách alter foreign key on delete cascade
--- 1. tìm constraint foreign key trong table rồi drop foreign key + tên constraint
--- alter table services
--- drop foreign key services_ibfk_2;
--- 2. alter add foreign key thêm on delete cascade
--- alter table services
--- add foreign key (type_of_service_id)
--- references types_of_service (type_of_service_id) on DELETE CASCADE;
