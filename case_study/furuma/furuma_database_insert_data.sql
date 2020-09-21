@@ -283,9 +283,15 @@ SELECT * FROM furuma.accompanied_services;
 SELECT * FROM furuma.services;
 SELECT * FROM furuma.types_of_service;
 
+
 INSERT INTO `furuma`.`employees` (`employee_id`, `employee_name`) VALUES ('13', 'Tran Minh Tri');
 INSERT INTO `furuma`.`employees` (`employee_id`, `employee_name`) VALUES ('14', 'Tuan Van');
 
+
 INSERT INTO `furuma`.`contracts` (`employee_id`, `customer_id`, `service_id`, `contract_creation_date`, `amount`) VALUES ('13', '5', '7', '2016-01-20', '20000000');
 INSERT INTO `furuma`.`contracts` (`employee_id`, `customer_id`, `service_id`, `contract_creation_date`, `amount`) VALUES ('14', '7', '8', '2020-01-20', '25000000');
+
+INSERT INTO `furuma`.`customers` (`customer_id`, `customer_name`) VALUES ('16', 'Toan');
+
+INSERT INTO `furuma`.`contracts` (`customer_id`, `contract_creation_date`, `amount`) VALUES ('16', '2015-01-01', '12500000');
 

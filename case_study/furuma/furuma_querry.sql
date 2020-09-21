@@ -335,15 +335,15 @@ having count(contracts.contract_id) >=3;
 
 -- 16.	Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2017 đến năm 2019.
 -- Cách alter foreign key on delete cascade
--- -- 1. tìm constraint foreign key trong table rồi drop foreign key + tên constraint
--- -- alter table services
--- -- drop foreign key services_ibfk_2;
--- -- 2. alter add foreign key thêm on delete cascade
--- -- alter table services
--- -- add foreign key (type_of_service_id)
--- -- references types_of_service (type_of_service_id) on DELETE CASCADE;
+-- 1. tìm constraint foreign key trong table rồi drop foreign key + tên constraint
+-- alter table services
+-- drop foreign key services_ibfk_2;
+-- 2. alter add foreign key thêm on delete cascade
+-- alter table services
+-- add foreign key (type_of_service_id)
+-- references types_of_service (type_of_service_id) on DELETE CASCADE;
 
-drop view if exists employees_having_no_contracts_2017_2019;
+-- Nhân viên chưa từng lập được hợp đồng nào từ năm 2017 đến năm 2019
 
 select employee_id, employee_name, id_number
 from employees
@@ -353,12 +353,16 @@ left join contracts on contracts.employee_id = employees.employee_id
 where year(contracts.contract_creation_date) between 2017 and 2019
 );
 
+-- Nhân viên từng lập được hợp đồng nào từ năm 2017 đến năm 2019
+
 select employees.employee_id, 
 year(contracts.contract_creation_date), count(contracts.contract_id),
 employees.employee_name from employees
 left join contracts on contracts.employee_id = employees.employee_id
 where year(contracts.contract_creation_date) between 2017 and 2019
 group by employees.employee_id;
+
+-- Xoá 
 
 alter table contracts
 drop foreign key contracts_ibfk_1;
@@ -367,35 +371,106 @@ alter table contracts
 add foreign key (employee_id) 
 references employees (employee_id) on delete cascade;
 
-delete from contracts
+delete from employees 
 where employee_id in (
+select * from (
 select employee_id
 from employees
 where employee_id not in 
 (select employees.employee_id from employees
 left join contracts on contracts.employee_id = employees.employee_id
 where year(contracts.contract_creation_date) between 2017 and 2019
-));
+)) as temp);
 
-delete from employees 
-where employee_id in
-(select employee_id
+-- Sau xoá, khách hàng thoả mãn điều kiện
+
+select employee_id, employee_name, id_number
 from employees
 where employee_id not in 
 (select employees.employee_id from employees
 left join contracts on contracts.employee_id = employees.employee_id
 where year(contracts.contract_creation_date) between 2017 and 2019
-));
+);
+
 
 -- 17.	Cập nhật thông tin những khách hàng có TenLoaiKhachHang từ  Platinium lên Diamond, 
 -- chỉ cập nhật những khách hàng đã từng đặt phòng với tổng Tiền thanh toán trong năm 2019 là lớn hơn 10.000.000 VNĐ.
+-- Trước Update, Khách hàng thoả mãn điều kiện 
+
+select customers.customer_id, customer_name, types_of_customer.type_name, sum(contracts.amount) from customers 
+left join types_of_customer on types_of_customer.type_of_customer_id = customers.type_of_customer_id
+left join contracts on contracts.customer_id = customers.customer_id
+where year(contracts.contract_creation_date) = 2019 and types_of_customer.type_name = 'Platinium'
+group by customers.customer_id
+having sum(contracts.amount) > 10000000;
+
+-- Trước Update, Khách hàng Diamond
+
+select customers.customer_id, customer_name, types_of_customer.type_name from customers 
+left join types_of_customer on types_of_customer.type_of_customer_id = customers.type_of_customer_id
+where types_of_customer.type_name = 'Diamond';
+
+-- Update 
+
+update customers 
+set customers.type_of_customer_id = (
+select types_of_customer.type_of_customer_id 
+from types_of_customer 
+where types_of_customer.type_name = 'Diamond')
+where customers.customer_id in (
+select * from (
+select customers.customer_id from customers 
+left join types_of_customer on types_of_customer.type_of_customer_id = customers.type_of_customer_id
+left join contracts on contracts.customer_id = customers.customer_id
+where year(contracts.contract_creation_date) = 2019 and types_of_customer.type_name = 'Platinium'
+group by customers.customer_id
+having sum(contracts.amount) > 10000000
+) as temp);
+
+-- Sau update, khách hàng Diamond
+
+select customers.customer_id, customer_name, types_of_customer.type_name 
+from customers 
+left join types_of_customer on types_of_customer.type_of_customer_id = customers.type_of_customer_id
+where types_of_customer.type_name = 'Diamond';
 
 
 -- 18.	Xóa những khách hàng có hợp đồng trước năm 2016 (chú ý ràngbuộc giữa các bảng).
+-- Trước xoá, khách hàng thoả mãn điều kiện
+select customers.customer_id, customers.customer_name, contracts.contract_creation_date 
+from customers 
+left join contracts on contracts.customer_id = customers.customer_id
+where year(contracts.contract_creation_date) < 2016;
+
+-- Xoá
+
+alter table contracts
+drop foreign key contracts_ibfk_2;
+
+alter table contracts
+add foreign key (customer_id) 
+references customers (customer_id) on delete cascade;
+
+delete from customers
+where customers.customer_id in (
+select * from (
+select customers.customer_id
+from customers 
+left join contracts on contracts.customer_id = customers.customer_id
+where year(contracts.contract_creation_date) < 2016
+) as temp);
+
+-- Sau xoá, khách hàng thoat mãn điều kiện
+
+select customers.customer_id, customers.customer_name, contracts.contract_creation_date 
+from customers 
+left join contracts on contracts.customer_id = customers.customer_id
+where year(contracts.contract_creation_date) < 2016;
 
 -- 19.	Cập nhật giá cho các Dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2019 lên gấp đôi.
 
--- 20.	Hiển thị thông tin của tất cả các Nhân viên và Khách hàng có trong hệ thống, thông tin hiển thị bao gồm ID (IDNhanVien, IDKhachHang), HoTen, Email, SoDienThoai, NgaySinh, DiaChi.
+-- 20.	Hiển thị thông tin của tất cả các Nhân viên và Khách hàng có trong hệ thống, 
+-- thông tin hiển thị bao gồm ID (IDNhanVien, IDKhachHang), HoTen, Email, SoDienThoai, NgaySinh, DiaChi.
  
 
 

@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4cbfa541-b85c-4f67-85cb-b788ef629009" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../../bai_5/bai_tap/view_index_stored_procedures.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../../bai_5/bai_tap/view_index_stored_procedures.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../case_study/furuma/furuma_database_insert_data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../../case_study/furuma/furuma_database_insert_data.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../case_study/furuma/furuma_querry.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../../case_study/furuma/furuma_querry.sql" afterDir="false" />
     </list>
@@ -55,7 +56,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1600656342408</updated>
-      <workItem from="1600656343513" duration="2699000" />
+      <workItem from="1600656343513" duration="3438000" />
     </task>
     <servers />
   </component>
