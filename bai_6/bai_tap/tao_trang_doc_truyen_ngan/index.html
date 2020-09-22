@@ -4,71 +4,159 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        .header {
-            /*Tất cả chữ cái viết hoa*/
-            text-transform: uppercase;
-            font-size: 50px;
+        body {
+            margin: 0 auto;
+            font-family: Arial, Tahoma;
+        }
+        #s-body {
+            float: left;
         }
 
-        .sub-site {
-            font-size: 20px;
+        #head, #head-link, #menu, #s-body, #footer {
+            width: 100%;
+            margin-bottom: 5px;
+            clear: both;
         }
 
-        .category-list {
-            /*Tất cả chữ cái viết hoa*/
-            text-transform: uppercase;
-            font-size: 40px;
+        #menu{
+            height: 30px;
+            padding:0;
+            margin:0;
+            background-color: #000000;
+            border: 1px solid #CDCDCD;
         }
 
-        .title-list {
-            /*Tất cả chữ cái viết hoa*/
-            text-transform: uppercase;
-            font-size: 30px;
+        #menu ul, #menu li{
+            padding:0;
+            margin:0;
         }
 
-        .category-name {
-            text-transform: capitalize;
-            font-size: 30px;
+        #menu li{
+            position: relative;
+            float: left;
+            list-style: none;
+            margin: 0;
+            padding:0;
         }
 
-        .title-name {
-            text-transform: capitalize;
-            font-size: 20px;
+        #menu li a{
+            width:300px;
+            height: 30px;
+            display: block;
+            text-decoration:none;
+            text-align: center;
+            line-height: 30px;
+            background-color: black;
+            color: white;
         }
+
+        #menu ul ul li a{
+            width: 200px;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        #menu li a:hover{
+            background-color: red;
+        }
+
+        #menu ul ul{
+            position: absolute;
+            top: 30px;
+            left: 15px;
+            visibility: hidden;
+        }
+
+        #menu ul li:hover ul{
+            visibility: visible;
+        }
+
+        #book-list {
+            text-align: center;
+        }
+
+        #book-1, #book-2, #book-3 {
+            float: left;
+            margin: 30px 5px 10px 160px;
+        }
+
 
     </style>
 </head>
 <body>
-<div>
-    <h1 class="header">Truyện full</h1>
-</div>
-<div>
-    <p class="sub-site">
-        Đọc truyện online, đọc truyện chữ, truyện full, truyện hay.
-        Tổng hợp đầy đủ và cập nhật liên tục.
-    </p>
-</div>
-<hr>
-<div>
-    <h2 class="category-list">Thể loại truyện</h2>
-</div>
-<div>
-    <h5 class="category-name"><a href="https://truyenfull.vn/the-loai/tien-hiep/">Tiên hiệp</a></h5>
-    <h5 class="category-name"><a href="https://truyenfull.vn/the-loai/kiem-hiep/">Kiếm hiệp</a></h5>
-    <h5 class="category-name"><a href="https://truyenfull.vn/the-loai/huyen-huyen/">Huyền huyễn</a></h5>
-    <h5 class="category-name"><a href="https://truyenfull.vn/the-loai/di-gioi/">Dị giới</a></h5>
-</div>
-<hr>
-<div>
-    <h3 class="title-list">Danh sách truyện</h3>
-</div>
-<div>
-    <img src="https://static.8cache.com/cover/o/eJzLyTDR1430dbb0NfWMd7MM1A9z8nWxDDLx8En11HeEgmzffH1ny6h4g_SkpNBAX_1yI0NT3QxjIyMAJDgRVA==/vu-dong-can-khon.jpg">
-    <h5 class="title-name"><a href="https://truyenfull.vn/vu-dong-can-khon/">Vũ Động Càn Khôn</a></h5>
-    <img src="https://static.8cache.com/cover/o/eJzLyTDW160wTC70dXI0zAnO1g9LL0gpsAz0CA_x1HeEAqckR31jj0A_n_Jg8ygXC_1yI0NT3QxjIyNdz2QTIwCuMBMz/linh-vu-thien-ha.jpg">
-    <h5 class="title-name"><a href="https://truyenfull.vn/linh-vu-thien-ha/">Linh Vũ Thiên Hạ</a></h5>
-    <img src="https://static.8cache.com/cover/o/eJzLyTDW1zUxD3A1ck4zdi_N1w-r9MgyD0sxDQz11HeEAj_dbP1A14jQ8MIyn2J3zxzDZE-XPGf38CqLZDc3f5Oi-KKAgnJn53z9ciNDU90MYyMjAHsxGlc=/nhat-niem-vinh-hang.jpg">
-    <h5 class="title-name"><a href="https://truyenfull.vn/nhat-niem-vinh-hang/">Nhất Niệm Vĩnh Hằng</a></h5>
+<div id="main">
+    <div id="head"><img src="https://i.pinimg.com/474x/55/17/b0/5517b08808eae175aedea67ba3314c75.jpg"></div>
+    <div id="head-link">
+        <h1>Truyện full</h1>
+        <h3>
+            Đọc truyện online, đọc truyện chữ, truyện full, truyện hay.
+            Tổng hợp đầy đủ và cập nhật liên tục.
+        </h3>
+    </div>
+    <div id="menu">
+        <ul>
+            <li><a href="#">Thể loại truyện</a>
+                <ul>
+                    <li><a href="https://truyenfull.vn/the-loai/tien-hiep/">Tiên hiệp</a></li>
+                    <li><a href="https://truyenfull.vn/the-loai/huyen-huyen/">Huyền huyễn</a></li>
+                    <li><a href="https://truyenfull.vn/the-loai/di-gioi/">Dị giới</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Truyện hot</a>
+                <ul>
+                    <li><a href="https://truyenfull.vn/the-loai/tien-hiep/">Tiên hiệp</a></li>
+                    <li><a href="https://truyenfull.vn/the-loai/huyen-huyen/">Huyền huyễn</a></li>
+                    <li><a href="https://truyenfull.vn/the-loai/di-gioi/">Dị giới</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Truyện hoàn thành </a>
+                <ul>
+                    <li><a href="https://truyenfull.vn/the-loai/tien-hiep/">Tiên hiệp</a></li>
+                    <li><a href="https://truyenfull.vn/the-loai/huyen-huyen/">Huyền huyễn</a></li>
+                    <li><a href="https://truyenfull.vn/the-loai/di-gioi/">Dị giới</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Truyện mới cập nhật </a>
+                <ul>
+                    <li><a href="https://truyenfull.vn/the-loai/tien-hiep/">Tiên hiệp</a></li>
+                    <li><a href="https://truyenfull.vn/the-loai/huyen-huyen/">Huyền huyễn</a></li>
+                    <li><a href="https://truyenfull.vn/the-loai/di-gioi/">Dị giới</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="s-body">
+        <div id="left"></div>
+        <div id="content">
+            <div id="book-list"><h3>Danh sách truyện</h3></div>
+            <div id="book-1">
+                <div id="book-img-1">
+                    <img src="https://static.8cache.com/cover/o/eJzLyTDR1430dbb0NfWMd7MM1A9z8nWxDDLx8En11HeEgmzffH1ny6h4g_SkpNBAX_1yI0NT3QxjIyMAJDgRVA==/vu-dong-can-khon.jpg">
+                </div>
+                <div id="book-name-1">
+                    Vũ Động Càn Khôn
+                </div>
+            </div>
+            <div id="book-2">
+                <div id="book-img-2">
+                    <img src="https://static.8cache.com/cover/o/eJzLyTDR1430dbb0NfWMd7MM1A9z8nWxDDLx8En11HeEgmzffH1ny6h4g_SkpNBAX_1yI0NT3QxjIyMAJDgRVA==/vu-dong-can-khon.jpg">
+                </div>
+                <div id="book-name-2">
+                    Vũ Động Càn Khôn
+                </div>
+            </div>
+            <div id="book-3">
+                <div id="book-img-3">
+                    <img src="https://static.8cache.com/cover/o/eJzLyTDR1430dbb0NfWMd7MM1A9z8nWxDDLx8En11HeEgmzffH1ny6h4g_SkpNBAX_1yI0NT3QxjIyMAJDgRVA==/vu-dong-can-khon.jpg">
+                </div>
+                <div id="book-name-3">
+                    Vũ Động Càn Khôn
+                </div>
+            </div>
+        </div>
+        <div id="right"></div>
+    </div>
+    <div id="footer"></div>
 </div>
 
 
