@@ -295,3 +295,9 @@ INSERT INTO `furuma`.`customers` (`customer_id`, `customer_name`) VALUES ('16', 
 
 INSERT INTO `furuma`.`contracts` (`customer_id`, `contract_creation_date`, `amount`) VALUES ('16', '2015-01-01', '12500000');
 
+INSERT INTO `furuma`.`employees` (`employee_id`, `employee_name`) VALUES ('15', 'Minh Tuan');
+
+INSERT INTO `furuma`.`customers` (`customer_id`, `type_of_customer_id`, `customer_name`) VALUES ('16', '2', 'Minh Tuan');
+
+
+

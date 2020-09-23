@@ -293,6 +293,15 @@ left join contract_details on contract_details.accompanied_service_id = accompan
 group by accompanied_services.accompanied_service_id
 order by count(contract_details_id) desc;
 
+select accompanied_services.accompanied_service_id, accompanied_services.accompanied_service_name,
+count(contract_details_id) as number_of_uses from accompanied_services
+left join contract_details on contract_details.accompanied_service_id = accompanied_services.accompanied_service_id
+group by accompanied_services.accompanied_service_id
+order by count(contract_details_id) desc;
+
+select * from
+number_of_uses_accompanied_services;
+
 select accompanied_service_id, accompanied_service_name, number_of_uses 
 from number_of_uses_accompanied_services
 where number_of_uses in 
@@ -468,11 +477,169 @@ left join contracts on contracts.customer_id = customers.customer_id
 where year(contracts.contract_creation_date) < 2016;
 
 -- 19.	Cập nhật giá cho các Dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2019 lên gấp đôi.
+-- Trước update
+select accompanied_service_id, accompanied_service_name, price 
+from accompanied_services;
+-- Update
+update accompanied_services
+set accompanied_services.price = accompanied_services.price * 2
+where accompanied_services.accompanied_service_id in 
+(select * from 
+(select accompanied_services.accompanied_service_id
+from accompanied_services
+left join contract_details on contract_details.accompanied_service_id = accompanied_services.accompanied_service_id
+left join contracts on contracts.contract_id = contract_details.contract_id
+group by accompanied_services.accompanied_service_id
+having count(contracts.contract_id) > 10) as temp)
+;
+
+-- Sau Update 
+
+select accompanied_service_id, accompanied_service_name, price 
+from accompanied_services;
+
+-- draft
+
+select accompanied_services.accompanied_service_id, accompanied_services.accompanied_service_name, count(contracts.contract_id)
+from accompanied_services
+left join contract_details on contract_details.accompanied_service_id = accompanied_services.accompanied_service_id
+left join contracts on contracts.contract_id = contract_details.contract_id
+group by accompanied_services.accompanied_service_id;
 
 -- 20.	Hiển thị thông tin của tất cả các Nhân viên và Khách hàng có trong hệ thống, 
 -- thông tin hiển thị bao gồm ID (IDNhanVien, IDKhachHang), HoTen, Email, SoDienThoai, NgaySinh, DiaChi.
- 
+select employee_id as id, employee_name as `name`, email, phone, date_of_birth, address, 'employee' as `employee/customer`  
+from employees
+union
+select customer_id as id, customer_name as `name`, email, phone, date_of_birth, address, 'customer' as `employee/customer` 
+from customers
+order by `employee/customer`, id;
 
+-- 21.	Tạo khung nhìn có tên là V_NHANVIEN để lấy được thông tin 
+-- của tất cả các nhân viên có địa chỉ là “Hải Châu” 
+-- và đã từng lập hợp đồng cho 1 hoặc nhiều Khách hàng bất kỳ  với ngày lập hợp đồng là “12/12/2019”
+create view v_employee as
+select employees.employee_id, employees.employee_name, employees.address, contracts.contract_creation_date,
+positions.position_name, levels.level_name, departments.department_name,
+employees.date_of_birth, employees.id_number, employees.salary, employees.phone,
+employees.email
+from employees
+left join contracts on contracts.employee_id = employees.employee_id
+left join positions on positions.position_id = employees.position_id
+left join departments on departments.department_id = employees.department_id
+left join levels on levels.level_id = employees.employee_id 
+where employees.address like '%Hai Chau%' and contracts.contract_creation_date = '2019-12-12';
+
+select * from v_employee;
+
+drop view v_employee;
+
+-- 22.	Thông qua khung nhìn V_NHANVIEN thực hiện cập nhật địa chỉ thành “Liên Chiểu” 
+-- đối với tất cả các Nhân viên được nhìn thấy bởi khung nhìn này.
+create view v_employee as
+select employees.employee_id, employees.employee_name, employees.address, contracts.contract_creation_date,
+positions.position_name, levels.level_name, departments.department_name,
+employees.date_of_birth, employees.id_number, employees.salary, employees.phone,
+employees.email
+from employees
+left join contracts on contracts.employee_id = employees.employee_id
+left join positions on positions.position_id = employees.position_id
+left join departments on departments.department_id = employees.department_id
+left join levels on levels.level_id = employees.employee_id 
+where employees.address like '%Da Nang%' and contracts.contract_creation_date = '2019-10-13';
+
+select * from v_employee;
+
+update employees
+set address = 'Lien Chieu, Da Nang'
+where employees.employee_id in 
+(select * from (
+select employee_id from v_employee ) as temp);
+
+select * from v_employee;
+
+
+-- 23.	Tạo Store procedure Sp_1 Dùng để xóa thông tin của một Khách hàng nào đó 
+-- với Id Khách hàng được truyền vào như là 1 tham số của Sp_1
+
+delete from customers 
+where customer_id = 16;
+
+drop procedure if exists sp_1;
+
+delimiter //
+create procedure sp_1 
+(in id int)
+begin
+delete from customers 
+where customer_id = id;
+end // 
+delimiter ;
+
+INSERT INTO customers (customer_id, type_of_customer_id, customer_name) VALUES (16, 2, 'Minh Tuan');
+
+call sp_1 (16);
+
+SELECT * FROM customers;
+
+-- 24.	Tạp Store procedure Sp_2 Dùng để thêm mới vào bảng HopDong với yêu cầu Sp_2 
+-- phải thực hiện kiểm tra tính hợp lệ của dữ liệu bổ sung, 
+-- với nguyên tắc không được trùng khó chính và đảm bảo toàn vẹn tham chiếu đến các bảng liên quan.
+
+INSERT INTO contracts 
+(contract_id, employee_id, customer_id, service_id, contract_creation_date, contract_end_date, deposit, amount) 
+VALUES (47, 10, 7, 9, '2019-03-01', '2019-03-20', 5000000, 14500000);
+
+INSERT INTO contracts 
+(employee_id, customer_id, service_id, contract_creation_date, contract_end_date, deposit, amount) 
+VALUES (id_employee, id_customer, id_service, creation_date, end_date, contract_deposit, contract_amount);
+
+delete from contracts
+where contract_id = 47;
+
+SELECT * FROM contracts;
+
+
+drop procedure if exists sp_2;
+
+delimiter //
+create procedure sp_2 
+(in id_employee int,
+in id_customer int,
+in id_service int,
+in creation_date date,
+in end_date date,
+in contract_deposit double,
+in contract_amount double)
+begin
+set @result = false;
+
+INSERT INTO contracts 
+(employee_id, customer_id, service_id, contract_creation_date, contract_end_date, deposit, amount) 
+VALUES (id_employee, id_customer, id_service, creation_date, end_date, contract_deposit, contract_amount);
+set @result = true;
+select @result;
+end // 
+delimiter ;
+
+SELECT * FROM contracts;
+
+delete from contracts
+where contract_id = 47;
+
+delete from contracts
+where contract_id = 48;
+
+call sp_2 (10, 7, 9, '2019-03-01', '2019-03-20', 5000000, 14500000);
+
+SELECT * FROM contracts;
+
+-- 25.	Tạo triggers có tên Tr_1 Xóa bản ghi trong bảng HopDong thì hiển thị tổng số lượng bản ghi còn lại có trong bảng HopDong ra giao diện console của database
+-- 26.	Tạo triggers có tên Tr_2 Khi cập nhật Ngày kết thúc hợp đồng, cần kiểm tra xem thời gian cập nhật có phù hợp hay không, với quy tắc sau: Ngày kết thúc hợp đồng phải lớn hơn ngày làm hợp đồng ít nhất là 2 ngày. Nếu dữ liệu hợp lệ thì cho phép cập nhật, nếu dữ liệu không hợp lệ thì in ra thông báo “Ngày kết thúc hợp đồng phải lớn hơn ngày làm hợp đồng ít nhất là 2 ngày” trên console của database
+-- 27.	Tạo user function thực hiện yêu cầu sau:
+-- a.	Tạo user function func_1: Đếm các dịch vụ đã được sử dụng với Tổng tiền là > 2.000.000 VNĐ.
+-- b.	Tạo user function Func_2: Tính khoảng thời gian dài nhất tính từ lúc bắt đầu làm hợp đồng đến lúc kết thúc hợp đồng mà Khách hàng đã thực hiện thuê dịch vụ (lưu ý chỉ xét các khoảng thời gian dựa vào từng lần làm hợp đồng thuê dịch vụ, không xét trên toàn bộ các lần làm hợp đồng). Mã của Khách hàng được truyền vào như là 1 tham số của function này.
+-- 28.	Tạo Store procedure Sp_3 để tìm các dịch vụ được thuê bởi khách hàng với loại dịch vụ là “Room” từ đầu năm 2015 đến hết năm 2019 để xóa thông tin của các dịch vụ đó (tức là xóa các bảng ghi trong bảng DichVu) và xóa những HopDong sử dụng dịch vụ liên quan (tức là phải xóa những bản gi trong bảng HopDong) và những bản liên quan khác.
 
 
 
