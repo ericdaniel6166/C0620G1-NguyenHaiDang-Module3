@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test CSS</title>
+    <link rel="stylesheet" href="lib/external_file.css"/>
+    <style>
+        .internal-css {
+            color: deepskyblue;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="color: rgb(255, 204, 0)">Hello CSS (inline)!</h2>
+    <h2 class="internal-css">Hello CSS (internal)!</h2>
+    <h2 class="external-css">Hello CSS (external)!</h2>
+    <h2 class="internal-css external-css">
+        Hello CSS (all)!
+    </h2>
+</body>
+</html>
