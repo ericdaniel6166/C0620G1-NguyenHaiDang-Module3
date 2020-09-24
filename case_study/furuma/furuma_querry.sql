@@ -19,7 +19,7 @@ from customers
 where 
 timestampdiff(year, date_of_birth, now()) between 18 and 50
 and
-address in ('Da Nang', 'Quang Tri');bv
+address in ('Da Nang', 'Quang Tri');
 
 -- simple check
 
@@ -68,6 +68,7 @@ order by count(contracts.contract_id);
 --  NgayLamHopDong, NgayKetThuc, TongTien 
 -- (Với TongTien được tính theo công thức như sau: ChiPhiThue + SoLuong*Gia, với SoLuong và Giá là từ bảng DichVuDiKem) 
 -- cho tất cả các Khách hàng đã từng đặt phỏng. (Những Khách hàng nào chưa từng đặt phòng cũng phải hiển thị ra).
+-- Chú ý 
 -- number + null = null
 
 select customers.customer_id,
@@ -75,7 +76,7 @@ customers.customer_name,
 types_of_customer.type_name, 
 contracts.contract_id, services.service_name,
 contracts.contract_creation_date, contracts.contract_end_date,
-sum(services.rent_price + contract_details.quantity * accompanied_services.price) as amount
+sum(services.rent_price + contract_details.quantity * accompanied_services.price) as total_amount
 from customers
 left join types_of_customer on types_of_customer.type_of_customer_id = customers.type_of_customer_id
 left join contracts on contracts.customer_id = customers.customer_id
@@ -634,10 +635,50 @@ call sp_2 (10, 7, 9, '2019-03-01', '2019-03-20', 5000000, 14500000);
 
 SELECT * FROM contracts;
 
--- 25.	Tạo triggers có tên Tr_1 Xóa bản ghi trong bảng HopDong thì hiển thị tổng số lượng bản ghi còn lại có trong bảng HopDong ra giao diện console của database
--- 26.	Tạo triggers có tên Tr_2 Khi cập nhật Ngày kết thúc hợp đồng, cần kiểm tra xem thời gian cập nhật có phù hợp hay không, với quy tắc sau: Ngày kết thúc hợp đồng phải lớn hơn ngày làm hợp đồng ít nhất là 2 ngày. Nếu dữ liệu hợp lệ thì cho phép cập nhật, nếu dữ liệu không hợp lệ thì in ra thông báo “Ngày kết thúc hợp đồng phải lớn hơn ngày làm hợp đồng ít nhất là 2 ngày” trên console của database
+-- 25.	Tạo triggers có tên Tr_1 Xóa bản ghi trong bảng HopDong 
+-- thì hiển thị tổng số lượng bản ghi còn lại có trong bảng HopDong ra giao diện console của database
+
+-- 26.	Tạo triggers có tên Tr_2 Khi cập nhật Ngày kết thúc hợp đồng, 
+-- cần kiểm tra xem thời gian cập nhật có phù hợp hay không, với quy tắc sau: 
+-- Ngày kết thúc hợp đồng phải lớn hơn ngày làm hợp đồng ít nhất là 2 ngày. 
+-- Nếu dữ liệu hợp lệ thì cho phép cập nhật, nếu dữ liệu không hợp lệ 
+-- thì in ra thông báo “Ngày kết thúc hợp đồng phải lớn hơn ngày làm hợp đồng ít nhất là 2 ngày” 
+-- trên console của database
+
 -- 27.	Tạo user function thực hiện yêu cầu sau:
 -- a.	Tạo user function func_1: Đếm các dịch vụ đã được sử dụng với Tổng tiền là > 2.000.000 VNĐ.
+delimiter //
+CREATE FUNCTION func_1 ()
+RETURNS INTEGER
+BEGIN
+set @a= 
+(select count(*) 
+from (select services.service_id, services.service_name, sum(contracts.amount) from services
+left join contracts on contracts.service_id = services.service_id
+group by services.service_id
+having sum(contracts.amount) > 2000000) as temp);
+RETURN @a;
+END //
+delimiter ;
+
+
+
+select count(*) 
+from (select services.service_id, services.service_name, sum(contracts.amount) from services
+left join contracts on contracts.service_id = services.service_id
+group by services.service_id
+having sum(contracts.amount) > 2000000) as temp;
+
+select services.service_id, services.service_name, sum(contracts.amount) from services
+left join contracts on contracts.service_id = services.service_id
+group by services.service_id
+having sum(contracts.amount) > 2000000
+;
+
+select services.service_id, services.service_name, contracts.amount from services
+left join contracts on contracts.service_id = services.service_id
+;
+
 -- b.	Tạo user function Func_2: Tính khoảng thời gian dài nhất tính từ lúc bắt đầu làm hợp đồng đến lúc kết thúc hợp đồng mà Khách hàng đã thực hiện thuê dịch vụ (lưu ý chỉ xét các khoảng thời gian dựa vào từng lần làm hợp đồng thuê dịch vụ, không xét trên toàn bộ các lần làm hợp đồng). Mã của Khách hàng được truyền vào như là 1 tham số của function này.
 -- 28.	Tạo Store procedure Sp_3 để tìm các dịch vụ được thuê bởi khách hàng với loại dịch vụ là “Room” từ đầu năm 2015 đến hết năm 2019 để xóa thông tin của các dịch vụ đó (tức là xóa các bảng ghi trong bảng DichVu) và xóa những HopDong sử dụng dịch vụ liên quan (tức là phải xóa những bản gi trong bảng HopDong) và những bản liên quan khác.
 
