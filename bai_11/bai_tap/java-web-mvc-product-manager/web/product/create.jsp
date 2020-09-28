@@ -64,11 +64,7 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    <a href="/products">
-                        <button>Back to product list</button>
-                    </a>
-                </td>
+                <td></td>
                 <td>
                     <input type="submit" value="Create product">
                 </td>

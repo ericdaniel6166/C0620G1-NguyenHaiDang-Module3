@@ -16,6 +16,12 @@
 <body>
 <h1>Search product by name</h1>
 
+<p>
+    <a href="/products">
+        <button>Back to product list</button>
+    </a>
+</p>
+
 <form method="post">
     <fieldset>
         <legend>Search product by name</legend>

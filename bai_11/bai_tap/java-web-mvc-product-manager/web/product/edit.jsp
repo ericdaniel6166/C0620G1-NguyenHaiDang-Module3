@@ -49,11 +49,7 @@
                 <td><input type="text" name="producer" id="producer" value="${requestScope["product"].getProducer()}"></td>
             </tr>
             <tr>
-                <td>
-                    <a href="/products">
-                        <button>Back to product list</button>
-                    </a>
-                </td>
+                <td></td>
                 <td><input type="submit" value="Update product"></td>
             </tr>
         </table>
