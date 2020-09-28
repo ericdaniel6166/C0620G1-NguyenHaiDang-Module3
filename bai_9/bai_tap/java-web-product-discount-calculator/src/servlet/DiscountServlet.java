@@ -10,13 +10,14 @@ import java.io.IOException;
 @WebServlet(name = "DiscountServlet", urlPatterns = "/discount")
 public class DiscountServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        request.getParameter() để lấy value của biến từ request
         String productDescription = request.getParameter("productDescription");
         Double listPrice = Double.parseDouble(request.getParameter("listPrice"));
         Double discountPercent = Double.parseDouble(request.getParameter("discountPercent"));
 
         Double amount = listPrice * discountPercent * 0.01;
 
-//        set attribute tên là amount để trang jsp nhận biến amount của servlet
+//        set attribute có string    tên là amount để trang jsp nhận biến amount của servlet
         request.setAttribute("amount", amount);
         request.setAttribute("productDescription", productDescription);
 
