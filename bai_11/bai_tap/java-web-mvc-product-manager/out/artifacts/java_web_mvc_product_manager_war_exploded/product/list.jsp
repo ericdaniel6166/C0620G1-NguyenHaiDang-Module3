@@ -17,8 +17,18 @@
 
 <h1>Products</h1>
 <p>
-    <a href="/products?action=create">Create new product</a>
+    <a href="/products">
+        <button>Back to product list</button>
+    </a>
+    <a href="/products?action=create">
+        <button>Create new product</button>
+    </a>
+    <a href="/products?action=search-by-name">
+        <button>Search product by name</button>
+    </a>
 </p>
+
+
 <table border="1">
     <tr>
         <td>Id</td>
