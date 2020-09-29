@@ -105,6 +105,35 @@ left join accompanied_services on accompanied_services.accompanied_service_id = 
 -- 6.	Hiển thị IDDichVu, TenDichVu, DienTich, ChiPhiThue, TenLoaiDichVu 
 -- của tất cả các loại Dịch vụ chưa từng được Khách hàng thực hiện đặt từ 
 -- quý 1 của năm 2019 (Quý 1 là tháng 1, 2, 3).
+-- Chú ý 
+-- hiểu đề bài là  bỏ khách hàng đặt trong quý 1,2,3 năm 2019
+
+-- Cách mẫu
+
+select services.service_id, services.service_name, services.area,
+services.rent_price, types_of_service.type_of_service_name, contracts.contract_creation_date,
+datediff(contracts.contract_creation_date, '2019-01-01') 
+from services
+left join types_of_service on types_of_service.type_of_service_id = services.type_of_service_id
+left join contracts on contracts.service_id = services.service_id
+where not exists --  select contract_id mà không tồn tại trong select contract_id subquery
+(select contract_id
+from  contracts 
+where (datediff(contract_creation_date, '2019-01-01') > 0
+and datediff(contract_creation_date, '2019-03-31') <= 0)
+and contracts.service_id = services.service_id)
+group by services.service_id
+order by services.service_id;
+
+select services.service_id, contracts.contract_id
+from  contracts 
+left join services on contracts.service_id = services.service_id
+where (datediff(contract_creation_date, '2019-01-01') > 0
+and datediff(contract_creation_date, '2019-03-31') <= 0)
+and contracts.service_id = services.service_id;
+
+
+-- Cách tự làm
 
 select services.service_id, services.service_name, services.area,
 services.rent_price, types_of_service.type_of_service_name, contracts.contract_creation_date,
@@ -117,6 +146,7 @@ where services.service_id not in
 from services
 left join contracts on contracts.service_id = services.service_id
 where datediff(contract_creation_date, '2019-01-01') > 0
+and datediff(contract_creation_date, '2019-03-31') <= 0
 )
 group by services.service_id
 order by services.service_id;
@@ -133,9 +163,10 @@ where services.service_id not in
 from services
 left join contracts on contracts.service_id = services.service_id
 where datediff(contract_creation_date, '2019-01-01') > 0
+and datediff(contract_creation_date, '2019-03-31') <= 0
 );
 
--- Dịch vụ đã từng được đặt từ 
+-- Dịch vụ đã từng được đặt trong 
 -- quý 1 của năm 2019 (Quý 1 là tháng 1, 2, 3)
 
 select services.service_id, services.service_name, services.area,
@@ -144,6 +175,7 @@ datediff(contracts.contract_creation_date, '2019-01-01') from services
 left join types_of_service on types_of_service.type_of_service_id = services.type_of_service_id
 left join contracts on contracts.service_id = services.service_id
 where datediff(contract_creation_date, '2019-01-01') > 0
+and datediff(contract_creation_date, '2019-03-31') <= 0
 group by service_id;
 
 -- chưa group by
@@ -153,12 +185,15 @@ services.rent_price, types_of_service.type_of_service_name, contracts.contract_c
 datediff(contracts.contract_creation_date, '2019-01-01') from services
 left join types_of_service on types_of_service.type_of_service_id = services.type_of_service_id
 left join contracts on contracts.service_id = services.service_id
-where datediff(contract_creation_date, '2019-01-01') > 0
+where datediff(contract_creation_date, '2019-01-01') >= 0 
+and datediff(contract_creation_date, '2019-03-31') <= 0
 order by services.service_id;
 
 -- 7.	Hiển thị thông tin IDDichVu, TenDichVu, DienTich, SoNguoiToiDa, ChiPhiThue, TenLoaiDichVu 
 -- của tất cả các loại dịch vụ đã từng được Khách hàng đặt phòng trong năm 2018 
 -- nhưng chưa từng được Khách hàng đặt phòng  trong năm 2019.
+
+
 
 select services.service_id, services.service_name, services.area, services.maximum_number_of_customers,
 services.rent_price, types_of_service.type_of_service_name, contracts.contract_creation_date from services

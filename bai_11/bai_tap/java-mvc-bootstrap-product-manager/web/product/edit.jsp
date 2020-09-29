@@ -80,7 +80,7 @@
                                     <label>Name</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" name="name" id="name" value="${requestScope["product"].getName()}">
+                                    <input type="text" name="name" id="name" class="form-control" required value="${requestScope["product"].getName()}">
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                                     <label>Price</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" name="price" id="price" value="${requestScope["product"].getPrice()}">
+                                    <input type="text" name="price" id="price" class="form-control" required value="${requestScope["product"].getPrice()}">
                                 </div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                                     <label>Description</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" name="description" id="description" value="${requestScope["product"].getDescription()}">
+                                    <input type="text" name="description" id="description" class="form-control" required value="${requestScope["product"].getDescription()}">
                                 </div>
                             </div>
                         </div>
@@ -110,13 +110,13 @@
                                     <label>Producer</label>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" name="producer" id="producer" value="${requestScope["product"].getProducer()}">
+                                    <input type="text" name="producer" id="producer" class="form-control" required value="${requestScope["product"].getProducer()}">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-success" value="Edit">
+                        <input type="submit" class="btn btn-warning" value="Edit">
                     </div>
                 </fieldset>
             </form>

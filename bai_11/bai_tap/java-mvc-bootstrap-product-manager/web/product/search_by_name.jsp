@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-success" value="Search">
+                        <input type="submit" class="btn btn-info" value="Search">
                     </div>
                 </fieldset>
             </form>

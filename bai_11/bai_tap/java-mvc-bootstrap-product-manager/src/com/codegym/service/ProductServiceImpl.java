@@ -21,6 +21,7 @@ public class ProductServiceImpl implements ProductService {
         products.put(7, new Product(7, "chair", 9120000, "fbc def", "FBC"));
         products.put(8, new Product(8, "chair", 8340000, "fbc def", "FBC"));
         products.put(9, new Product(9, "bhair", 82333000, "fbc def", "FBC"));
+        products.put(10, new Product(9, null, 82333000, "fbc def", "FBC"));
     }
 
     @Override
@@ -41,11 +42,28 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findByName(String name) {
         List<Product> productList = new ArrayList<>();
-        for (Integer key: products.keySet()){
-            if (name.equals(products.get(key).getName())){
+
+//        Tìm kiếm chính xác tên dùng .equals()
+//        *********
+//        for (Integer key : products.keySet()) {
+//            if (name.equals(products.get(key).getName())) {
+//                productList.add(products.get(key));
+//            }
+//        }
+//        *********
+
+//        Tìm kiếm tên chứa dùng .contains()
+//        ***********
+        for (Integer key : products.keySet()) {
+            if (products.get(key).getName() == null) {
+                continue;
+            }
+            if (products.get(key).getName().contains(name)) {
                 productList.add(products.get(key));
             }
         }
+//        ********
+
         return productList;
     }
 
