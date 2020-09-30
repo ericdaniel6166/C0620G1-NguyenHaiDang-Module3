@@ -25,7 +25,22 @@ public class UserDAO implements IUserDAO {
     private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ?, country =? where id = ?;";
 
     private static final String SORT_USERS_BY_NAME = "select * from users order by name;";
-    private static final String SEARCH_USERS_BY_COUNTRY = "select * from users where country =?;";
+
+//    **********
+//    Tìm tương đối
+//    *******
+//    Cách 1
+//    ***********
+//    private static final String SEARCH_USERS_BY_COUNTRY = "select * from users where country like ?;";
+//    *******
+//    Cách 2
+//    **********
+    private static final String SEARCH_USERS_BY_COUNTRY = "select * from users where country like concat('%',?,'%');";
+//    **********
+//    Tìm tuyệt đối
+//    *********
+//    private static final String SEARCH_USERS_BY_COUNTRY = "select * from users where country = ?;";
+//    **********
     public UserDAO() {
     }
 
@@ -175,7 +190,20 @@ public class UserDAO implements IUserDAO {
 
              // Step 2:Create a statement using connection object
              PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_USERS_BY_COUNTRY);) {
+            //    **********
+            //    Tìm tương đối
+//            Cách 1
+            //    *******
+//            preparedStatement.setString(1, "%"+ countrySearch+"%");
+//            **********
+//            Cách 2
+//            ***********
             preparedStatement.setString(1, countrySearch);
+//            **********
+//            Tìm tuyệt đối
+//            *******
+//            preparedStatement.setString(1, countrySearch);
+//            ***********
             System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
