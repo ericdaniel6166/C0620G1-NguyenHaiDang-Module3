@@ -1,8 +1,8 @@
 package bo;
 
-import dao.EmployeeDAO;
-import dao.EmployeeDAOImpl;
-import model.Employee;
+import dao.*;
+import dto.EmployeeDTO;
+import model.*;
 
 import java.util.List;
 
@@ -10,27 +10,34 @@ public class EmployeeBOImpl implements EmployeeBO {
     EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
     @Override
-    public List<Employee> selectAllEmployees() {
-        return employeeDAO.selectAllEmployees();
+    public List<Employee> listEmployeeTable() {
+        return employeeDAO.listEmployeeTable();
     }
 
     @Override
-    public Employee selectEmployeeById(int id) {
-        return employeeDAO.selectEmployeeById(id);
+    public List<EmployeeDTO> listEmployeeView() {
+        return employeeDAO.listEmployeeView();
     }
 
     @Override
-    public boolean insertEmployee(Employee employee) {
-        return employeeDAO.insertEmployee(employee);
+    public Employee searchEmployeeById(Integer id) {
+        return employeeDAO.searchEmployeeById(id);
     }
 
     @Override
-    public boolean updateEmployee(Employee employee) {
-        return employeeDAO.updateEmployee(employee);
+    public boolean addEmployee(Employee employee) {
+        return employeeDAO.addEmployee(employee);
     }
 
     @Override
-    public boolean deleteEmployee(int id) {
+    public boolean editEmployee(Employee employee) {
+        return employeeDAO.editEmployee(employee);
+    }
+
+    @Override
+    public boolean deleteEmployee(Integer id) {
         return employeeDAO.deleteEmployee(id);
     }
+
+
 }

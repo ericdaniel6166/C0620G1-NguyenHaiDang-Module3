@@ -5,6 +5,8 @@
   Time: 2:49 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -164,7 +166,7 @@
                             </div>
                             <div class="footer-tittle">
                                 <div class="footer-pera">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore.</p>
+                                    <p>Furama is a premier base for exploring one of Asia’s most exciting new destinations. Just a short drive from Danang lay four UNESCO-listed World Heritage Sites</p>
                                 </div>
                             </div>
                         </div>
@@ -186,12 +188,12 @@
                 <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
                     <div class="single-footer-caption mb-50">
                         <div class="footer-tittle">
-                            <h4>New Products</h4>
+                            <h4>Furama Resort</h4>
                             <ul>
-                                <li><a href="#">Woman Cloth</a></li>
-                                <li><a href="#">Fashion Accessories</a></li>
-                                <li><a href="#"> Man Accessories</a></li>
-                                <li><a href="#"> Rubber made Toys</a></li>
+                                <li><a href="#">News</a></li>
+                                <li><a href="#">Rack Rate</a></li>
+                                <li><a href="#">Lifestyle Blog</a></li>
+                                <li><a href="#">Work with us</a></li>
                             </ul>
                         </div>
                     </div>

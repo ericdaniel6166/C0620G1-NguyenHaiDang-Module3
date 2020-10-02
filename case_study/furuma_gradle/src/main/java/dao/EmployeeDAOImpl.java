@@ -1,5 +1,6 @@
 package dao;
 
+import dto.EmployeeDTO;
 import model.Employee;
 
 import java.sql.PreparedStatement;
@@ -9,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
-    public static final String SELECT_ALL_EMPLOYEES = "SELECT * FROM employees;";
+    public static final String SELECT_ALL_EMPLOYEES_VIEW = "SELECT * FROM view_employees;";
+    public static final String SELECT_ALL_EMPLOYEES_TABLE = "SELECT * FROM employees;";
     private static final String SELECT_EMPLOYEE_BY_ID = "SELECT * FROM employees where employee_id = ?;";
     private static final String INSERT_EMPLOYEE = "INSERT INTO employees (employee_id, employee_name, position_id, level_id, department_id, date_of_birth, id_number, salary, phone, email, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String UPDATE_EMPLOYEE = "UPDATE employees SET employee_name = ?, position_id = ?, level_id = ?, department_id = ?, date_of_birth = ?, id_number = ?, salary = ?, phone = ?, email = ?, address = ? WHERE (employee_id = ?);";
@@ -18,23 +20,23 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     private BaseDAO baseDAO = new BaseDAO();
 
     @Override
-    public List<Employee> selectAllEmployees() {
+    public List<Employee> listEmployeeTable() {
         List<Employee> employeeList = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_ALL_EMPLOYEES);
+            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_ALL_EMPLOYEES_TABLE);
             ResultSet resultSet = preparedStatement.executeQuery();
             Employee employee;
             while (resultSet.next()) {
-                int employeeId = Integer.parseInt(resultSet.getString("employee_id"));
+                Integer employeeId = Integer.valueOf(resultSet.getString("employee_id"));
                 String employeeName = resultSet.getString("employee_name");
-                int positionId = Integer.parseInt(resultSet.getString("position_id"));
-                int levelId = Integer.parseInt(resultSet.getString("level_id"));
-                int departmentId = Integer.parseInt(resultSet.getString("department_id"));
+                Integer positionId = Integer.valueOf(resultSet.getString("position_id"));
+                Integer levelId = Integer.valueOf(resultSet.getString("level_id"));
+                Integer departmentId = Integer.valueOf(resultSet.getString("department_id"));
                 String dateOfBirth = resultSet.getString("date_of_birth");
                 String idNumber = resultSet.getString("id_number");
                 double salary = Double.parseDouble(resultSet.getString("salary"));
                 String phone = resultSet.getString("phone");
-                String email = resultSet.getString("String");
+                String email = resultSet.getString("email");
                 String address = resultSet.getString("address");
                 employee = new Employee(employeeId, employeeName, positionId, levelId, departmentId, dateOfBirth, idNumber, salary, phone, email, address);
                 employeeList.add(employee);
@@ -46,18 +48,46 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public Employee selectEmployeeById(int id) {
+    public List<EmployeeDTO> listEmployeeView() {
+        List<EmployeeDTO> employeeDTOList = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_ALL_EMPLOYEES_VIEW);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Integer employeeId = Integer.valueOf(resultSet.getString("employee_id"));
+                String employeeName = resultSet.getString("employee_name");
+
+                String positionName = resultSet.getString("position_name");
+                String levelName = resultSet.getString("level_name");
+                String departmentName = resultSet.getString("department_name");
+
+                String dateOfBirth = resultSet.getString("date_of_birth");
+                String idNumber = resultSet.getString("id_number");
+                double salary = Double.parseDouble(resultSet.getString("salary"));
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+                String address = resultSet.getString("address");
+                employeeDTOList.add(new EmployeeDTO(employeeId, employeeName, positionName, levelName, departmentName, dateOfBirth, idNumber, salary, phone, email, address));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employeeDTOList;
+    }
+
+    @Override
+    public Employee searchEmployeeById(Integer id) {
         Employee employee = null;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_EMPLOYEE_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int employeeId = Integer.parseInt(resultSet.getString("employee_id"));
+                Integer employeeId = Integer.valueOf(resultSet.getString("employee_id"));
                 String employeeName = resultSet.getString("employee_name");
-                int positionId = Integer.parseInt(resultSet.getString("position_id"));
-                int levelId = Integer.parseInt(resultSet.getString("level_id"));
-                int departmentId = Integer.parseInt(resultSet.getString("department_id"));
+                Integer positionId = Integer.valueOf(resultSet.getString("position_id"));
+                Integer levelId = Integer.valueOf(resultSet.getString("level_id"));
+                Integer departmentId = Integer.valueOf(resultSet.getString("department_id"));
                 String dateOfBirth = resultSet.getString("date_of_birth");
                 String idNumber = resultSet.getString("id_number");
                 double salary = Double.parseDouble(resultSet.getString("salary"));
@@ -74,7 +104,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public boolean insertEmployee(Employee employee) {
+    public boolean addEmployee(Employee employee) {
         boolean rowInsert = false;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(INSERT_EMPLOYEE);
@@ -97,7 +127,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public boolean updateEmployee(Employee employee) {
+    public boolean editEmployee(Employee employee) {
         boolean rowUpdate = false;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(UPDATE_EMPLOYEE);
@@ -121,7 +151,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public boolean deleteEmployee(int id) {
+    public boolean deleteEmployee(Integer id) {
         boolean rowDelete = false;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(DELETE_EMPLOYEE);

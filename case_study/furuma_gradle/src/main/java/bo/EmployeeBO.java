@@ -1,17 +1,24 @@
 package bo;
 
+import dto.EmployeeDTO;
 import model.Employee;
+import model.EmployeeView;
 
 import java.util.List;
 
 public interface EmployeeBO {
-    List<Employee> selectAllEmployees();
+    List<Employee> listEmployeeTable();
 
-    Employee selectEmployeeById(int id);
+    List<EmployeeDTO> listEmployeeView();
 
-    boolean insertEmployee(Employee employee);
+    Employee searchEmployeeById(Integer id);
 
-    boolean updateEmployee(Employee employee);
+    boolean addEmployee(Employee employee);
 
-    boolean deleteEmployee(int id);
+    boolean editEmployee(Employee employee);
+
+    boolean deleteEmployee(Integer id);
+
+
+
 }

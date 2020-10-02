@@ -1,11 +1,11 @@
 package model;
 
 public class Employee {
-    private int employeeId;
+    private Integer employeeId;
     private String employeeName;
-    private int positionId;
-    private int levelId;
-    private int departmentId;
+    private Integer positionId;
+    private Integer levelId;
+    private Integer departmentId;
     private String dateOfBirth;
     private String idNumber;
     private double salary;
@@ -16,7 +16,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(int employeeId, String employeeName, int positionId, int levelId, int departmentId, String dateOfBirth, String idNumber, double salary, String phone, String email, String address) {
+    public Employee(Integer employeeId, String employeeName, Integer positionId, Integer levelId, Integer departmentId, String dateOfBirth, String idNumber, double salary, String phone, String email, String address) {
         this.employeeId = employeeId;
         this.employeeName = employeeName;
         this.positionId = positionId;
@@ -30,11 +30,11 @@ public class Employee {
         this.address = address;
     }
 
-    public int getEmployeeId() {
+    public Integer getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(int employeeId) {
+    public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -46,27 +46,27 @@ public class Employee {
         this.employeeName = employeeName;
     }
 
-    public int getPositionId() {
+    public Integer getPositionId() {
         return positionId;
     }
 
-    public void setPositionId(int positionId) {
+    public void setPositionId(Integer positionId) {
         this.positionId = positionId;
     }
 
-    public int getLevelId() {
+    public Integer getLevelId() {
         return levelId;
     }
 
-    public void setLevelId(int levelId) {
+    public void setLevelId(Integer levelId) {
         this.levelId = levelId;
     }
 
-    public int getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
     }
 
@@ -116,5 +116,22 @@ public class Employee {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeId=" + employeeId +
+                ", employeeName='" + employeeName + '\'' +
+                ", positionId=" + positionId +
+                ", levelId=" + levelId +
+                ", departmentId=" + departmentId +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", salary=" + salary +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

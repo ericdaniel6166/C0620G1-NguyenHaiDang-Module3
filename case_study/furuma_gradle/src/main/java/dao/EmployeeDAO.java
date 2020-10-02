@@ -1,18 +1,20 @@
 package dao;
 
+import dto.EmployeeDTO;
 import model.Employee;
 
 import java.util.List;
 
 public interface EmployeeDAO {
-    List<Employee> selectAllEmployees();
+    List<Employee> listEmployeeTable();
+    List<EmployeeDTO> listEmployeeView();
 
-    Employee selectEmployeeById(int id);
+    Employee searchEmployeeById(Integer id);
 
-    boolean insertEmployee(Employee employee);
+    boolean addEmployee(Employee employee);
 
-    boolean updateEmployee(Employee employee);
+    boolean editEmployee(Employee employee);
 
-    boolean deleteEmployee(int id);
+    boolean deleteEmployee(Integer id);
 
 }
