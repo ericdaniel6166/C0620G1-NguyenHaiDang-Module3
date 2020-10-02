@@ -88,15 +88,18 @@ BEGIN
     END$$
 DELIMITER ;
 
+call delete_users(?);
 
 DELIMITER $$
-CREATE PROCEDURE delete_users(
-in input_id int,
-in input_name varchar(100),
-in input_email varchar(100),
-in input_country varchar(100)
+CREATE PROCEDURE update_users(
+in input_name varchar(120),
+in input_email varchar(120),
+in input_country varchar(120),
+in input_id int
 )
 BEGIN
-	update users set name = ?,email= ?, country =? where id = ?;
+	update users set name = input_name, email= input_email, country = input_country where id = input_id;
     END$$
 DELIMITER ;
+
+call update_users(?,?,?,?);

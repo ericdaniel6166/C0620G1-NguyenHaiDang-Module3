@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="c06g-jdbc:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/c06g_jdbc_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="c06g-jdbc/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="c06g-jdbc" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jstl-1.2" />
+          <element id="library" level="project" name="mysql-connector-java-8.0.11" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

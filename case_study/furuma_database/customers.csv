@@ -1,8 +1,0 @@
-customer_id,type_of_customer_id,customer_name,date_of_birth,id_number,phone,email,address
-1,NULL,An,1990-01-01,NULL,NULL,NULL,"Da Nang"
-2,NULL,Tuan,1990-01-01,NULL,NULL,NULL,Hue
-3,NULL,Minh,1940-01-01,NULL,NULL,NULL,"Da Nang"
-4,NULL,Tu,1990-01-01,NULL,NULL,NULL,HCM
-5,NULL,Chau,2005-01-28,NULL,NULL,NULL,"Quang Tri"
-6,NULL,Giang,1990-01-01,NULL,NULL,NULL,"Quang Tri"
-7,NULL,Binh,1990-01-01,NULL,NULL,NULL,"Ha Noi"
