@@ -29,62 +29,22 @@ public class EmployeeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
         if (action == null) {
-            action = "";
+            action = "list";
         }
         switch (action) {
             case "add":
                 addEmployee(request, response);
-                listEmployee(request, response);
                 break;
             case "edit":
                 editEmployee(request, response);
-                listEmployee(request, response);
                 break;
             case "delete":
                 deleteEmployee(request, response);
-                listEmployee(request, response);
                 break;
-            case "search_by_name":
-                searchEmployeeByName(request, response);
             default:
-//                listEmployeeTable(request, response);
                 break;
         }
-
-    }
-
-    private String searchEmployeeByName(HttpServletRequest request, HttpServletResponse response) {
-        boolean employeeSearched = false;
-        String message = "";
-        List<EmployeeDTO> employeeDTOList = null;
-        try {
-            String employeeNameSearch = request.getParameter("employeeNameSearch");
-            employeeDTOList = this.employeeBO.searchEmployeeByName(employeeNameSearch);
-            if (employeeDTOList == null) {
-                message += "Employee Name " + '"' + employeeNameSearch + '"' + " is not found";
-            } else {
-                message = "Employee Name " + '"' + employeeNameSearch + '"';
-            }
-
-            request.setAttribute("employeeDTOList", employeeDTOList);
-            request.setAttribute("message", message);
-
-            List<Position> positionList = this.positionBO.listPosition();
-            request.setAttribute("positionList", positionList);
-
-            List<Level> levelList = this.levelBO.listLevel();
-            request.setAttribute("levelList", levelList);
-
-            List<Department> departmentList = this.departmentBO.listDepartment();
-            request.setAttribute("departmentList", departmentList);
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("employee/list_employee.jsp");
-            dispatcher.forward(request, response);
-
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
-        return message;
+        listEmployee(request, response);
     }
 
     private String editEmployee(HttpServletRequest request, HttpServletResponse response) {
@@ -124,7 +84,7 @@ public class EmployeeServlet extends HttpServlet {
 
             String emailEdit = request.getParameter("emailEdit");
             if (!Validator.regex(REGEX_EMAIL, emailEdit)) {
-                message += "Invalid Email: Please input valid email (ex: abc_abc.abc@abc.abc.abc).";
+                message += "Invalid Email: Please input valid email (ex: abc_abc.abc@abc.abc.abc). <br>";
             }
 
             String addressEdit = request.getParameter("addressEdit");
@@ -156,7 +116,6 @@ public class EmployeeServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-
         return message;
     }
 
@@ -234,7 +193,7 @@ public class EmployeeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
         if (action == null) {
-            action = "";
+            action = "list";
         }
 
 //        Bước 9: Phát triển tính năng thêm một sản phẩm mới
@@ -242,32 +201,57 @@ public class EmployeeServlet extends HttpServlet {
 //        Điều hướng việc hiển thị form tạo sản phẩm mới:
         switch (action) {
             case "add":
-//                showCreateForm(request, response);
+//                showAddForm(request, response);
                 break;
             case "edit":
-//                Bước 10: Phát triển tính năng cập nhật thông tin sản phẩm
-//
-//                Điều hướng hiển thị form cập nhật thông tin sản phẩm:
-
 //                showEditForm(request, response);
                 break;
             case "delete":
-//                Bước 11: Phát triển tính năng xoá một sản phẩm
-
 //                showDeleteForm(request, response);
                 break;
             case "view":
-//                Bước 12: Phát triển tính năng xem chi tiết một sản phẩm
-
 //                viewEmployee(request,response);
                 break;
             case "search_by_name":
-//                searchEmployeeByNameForm(request, response);
+                searchEmployeeByName(request, response);
             default:
-//                listEmployeeTable(request, response);
                 listEmployee(request, response);
                 break;
         }
+    }
+
+    private String searchEmployeeByName(HttpServletRequest request, HttpServletResponse response) {
+        boolean employeeSearched = false;
+        String message = "";
+        List<EmployeeDTO> employeeDTOList = null;
+        try {
+            String employeeNameSearch = request.getParameter("employeeNameSearch");
+            employeeDTOList = this.employeeBO.searchEmployeeByName(employeeNameSearch);
+            if (employeeDTOList == null) {
+                message += "Employee Name " + '"' + employeeNameSearch + '"' + " is not found";
+            } else {
+                message = "Employee Name " + '"' + employeeNameSearch + '"';
+            }
+
+            request.setAttribute("employeeDTOList", employeeDTOList);
+            request.setAttribute("message", message);
+
+            List<Position> positionList = this.positionBO.listPosition();
+            request.setAttribute("positionList", positionList);
+
+            List<Level> levelList = this.levelBO.listLevel();
+            request.setAttribute("levelList", levelList);
+
+            List<Department> departmentList = this.departmentBO.listDepartment();
+            request.setAttribute("departmentList", departmentList);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("employee/list_employee.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
+        return message;
     }
 
     private void listEmployee(HttpServletRequest request, HttpServletResponse response) {

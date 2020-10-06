@@ -259,7 +259,7 @@
 <script src="./assets/js/animated.headline.js"></script>
 <script src="./assets/js/jquery.magnific-popup.js"></script>
 
-<!-- Scrollup, nice-select, sticky -->
+<!-- Scroll up, nice-select, sticky -->
 <script src="./assets/js/jquery.scrollUp.min.js"></script>
 <script src="./assets/js/jquery.nice-select.min.js"></script>
 <script src="./assets/js/jquery.sticky.js"></script>

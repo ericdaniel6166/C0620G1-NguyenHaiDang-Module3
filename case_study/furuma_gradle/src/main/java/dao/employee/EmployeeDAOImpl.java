@@ -12,16 +12,14 @@ import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
     public static final String SELECT_ALL_EMPLOYEE_VIEW = "SELECT * FROM view_employees;";
-    private static final String SELECT_EMPLOYEE_BY_ID = "SELECT * FROM employees where employee_id = ?;";
     private static final String INSERT_EMPLOYEE = "INSERT INTO employees VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String UPDATE_EMPLOYEE = "UPDATE employees SET employee_name = ?, position_id = ?, level_id = ?, department_id = ?, date_of_birth = ?, id_number = ?, salary = ?, phone = ?, email = ?, address = ? WHERE (employee_id = ?);";
     private static final String DELETE_EMPLOYEE = "DELETE FROM employees WHERE employee_id = ?;";
+
+    private static final String SEARCH_EMPLOYEE_BY_ID = "SELECT * FROM employees where employee_id = ?;";
     private static final String SEARCH_EMPLOYEE_BY_NAME = "SELECT * FROM view_employees WHERE employee_name LIKE concat('%',?,'%');";
 
-
-
     private BaseDAO baseDAO = new BaseDAO();
-
 
     @Override
     public List<EmployeeDTO> listEmployee() {
@@ -48,74 +46,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String address = resultSet.getString("address");
-                employeeDTOList.add(new EmployeeDTO(employeeId, employeeName, positionId, positionName, levelId, levelName, departmentId, departmentName, dateOfBirth, idNumber, salary, phone, email, address));
+                EmployeeDTO employeeDTO = new EmployeeDTO(employeeId, employeeName, positionId, positionName, levelId, levelName, departmentId, departmentName, dateOfBirth, idNumber, salary, phone, email, address);
+                employeeDTOList.add(employeeDTO);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return employeeDTOList;
-    }
-
-    @Override
-    public List<EmployeeDTO> searchEmployeeByName(String name) {
-        List<EmployeeDTO> employeeDTOList = new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SEARCH_EMPLOYEE_BY_NAME);
-            preparedStatement.setString(1,name);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Integer employeeId = Integer.valueOf(resultSet.getString("employee_id"));
-                String employeeName = resultSet.getString("employee_name");
-
-                Integer positionId = Integer.valueOf(resultSet.getString("position_id"));
-                String positionName = resultSet.getString("position_name");
-
-                Integer levelId = Integer.valueOf(resultSet.getString("level_id"));
-                String levelName = resultSet.getString("level_name");
-
-                Integer departmentId = Integer.valueOf(resultSet.getString("department_id"));
-                String departmentName = resultSet.getString("department_name");
-
-                String dateOfBirth = resultSet.getString("date_of_birth");
-                String idNumber = resultSet.getString("id_number");
-                double salary = Double.parseDouble(resultSet.getString("salary"));
-                String phone = resultSet.getString("phone");
-                String email = resultSet.getString("email");
-                String address = resultSet.getString("address");
-                employeeDTOList.add(new EmployeeDTO(employeeId, employeeName, positionId, positionName, levelId, levelName, departmentId, departmentName, dateOfBirth, idNumber, salary, phone, email, address));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return employeeDTOList;
-    }
-
-    @Override
-    public Employee searchEmployeeById(Integer id) {
-        Employee employee = null;
-        try {
-            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_EMPLOYEE_BY_ID);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Integer employeeId = Integer.valueOf(resultSet.getString("employee_id"));
-                String employeeName = resultSet.getString("employee_name");
-                Integer positionId = Integer.valueOf(resultSet.getString("position_id"));
-                Integer levelId = Integer.valueOf(resultSet.getString("level_id"));
-                Integer departmentId = Integer.valueOf(resultSet.getString("department_id"));
-                String dateOfBirth = resultSet.getString("date_of_birth");
-                String idNumber = resultSet.getString("id_number");
-                double salary = Double.parseDouble(resultSet.getString("salary"));
-                String phone = resultSet.getString("phone");
-                String email = resultSet.getString("email");
-                String address = resultSet.getString("address");
-                employee = new Employee(employeeId, employeeName, positionId, levelId, departmentId, dateOfBirth, idNumber, salary, phone, email, address);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return employee;
     }
 
     @Override
@@ -184,4 +121,68 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return rowDelete;
 
     }
+
+    @Override
+    public Employee searchEmployeeById(Integer id) {
+        Employee employee = null;
+        try {
+            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SEARCH_EMPLOYEE_BY_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Integer employeeId = Integer.valueOf(resultSet.getString("employee_id"));
+                String employeeName = resultSet.getString("employee_name");
+                Integer positionId = Integer.valueOf(resultSet.getString("position_id"));
+                Integer levelId = Integer.valueOf(resultSet.getString("level_id"));
+                Integer departmentId = Integer.valueOf(resultSet.getString("department_id"));
+                String dateOfBirth = resultSet.getString("date_of_birth");
+                String idNumber = resultSet.getString("id_number");
+                double salary = Double.parseDouble(resultSet.getString("salary"));
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+                String address = resultSet.getString("address");
+                employee = new Employee(employeeId, employeeName, positionId, levelId, departmentId, dateOfBirth, idNumber, salary, phone, email, address);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employee;
+    }
+
+    @Override
+    public List<EmployeeDTO> searchEmployeeByName(String name) {
+        List<EmployeeDTO> employeeDTOList = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SEARCH_EMPLOYEE_BY_NAME);
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Integer employeeId = Integer.valueOf(resultSet.getString("employee_id"));
+                String employeeName = resultSet.getString("employee_name");
+
+                Integer positionId = Integer.valueOf(resultSet.getString("position_id"));
+                String positionName = resultSet.getString("position_name");
+
+                Integer levelId = Integer.valueOf(resultSet.getString("level_id"));
+                String levelName = resultSet.getString("level_name");
+
+                Integer departmentId = Integer.valueOf(resultSet.getString("department_id"));
+                String departmentName = resultSet.getString("department_name");
+
+                String dateOfBirth = resultSet.getString("date_of_birth");
+                String idNumber = resultSet.getString("id_number");
+                double salary = Double.parseDouble(resultSet.getString("salary"));
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+                String address = resultSet.getString("address");
+                employeeDTOList.add(new EmployeeDTO(employeeId, employeeName, positionId, positionName, levelId, levelName, departmentId, departmentName, dateOfBirth, idNumber, salary, phone, email, address));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employeeDTOList;
+    }
+
+
 }

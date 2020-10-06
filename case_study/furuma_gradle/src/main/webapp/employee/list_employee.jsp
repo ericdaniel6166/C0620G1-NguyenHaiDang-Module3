@@ -13,14 +13,22 @@
     <title>Title</title>
 
     <!--	cdn-->
+    <%--    cdn font Varela--%>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <%--    cdn Google Material Icons --%>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <%--    cdn font awesome 4.7--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
+    <%--    cdn bootstrap 4.3--%>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <%--    cdn datatable Pagination, Instant search, Multi-column ordering--%>
+    <%--    https://datatables.net/--%>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
@@ -309,26 +317,42 @@
     </style>
     <!--	custom js-->
     <script>
-        // function setEmployeeEdit(employeeId, employeeName, positionId, positionName, levelId, levelName, departmentId, departmentName, dateOfBirth, idNumber, salary, phone, email, address) {
+        function setEmployeeView(employeeId, employeeName, positionName, levelName, departmentName, dateOfBirth, idNumber, salary, phone, email, address) {
+            document.getElementById("employeeIdView").innerHTML = employeeId;
+            document.getElementById("employeeNameView").innerHTML = employeeName;
+
+            document.getElementById("positionNameView").innerHTML = positionName;
+            document.getElementById("levelNameView").innerHTML = levelName;
+            document.getElementById("departmentNameView").innerHTML = departmentName;
+
+            document.getElementById("dateOfBirthView").innerHTML = dateOfBirth;
+            document.getElementById("idNumberView").innerHTML = idNumber;
+            document.getElementById("salaryView").innerHTML = salary;
+            document.getElementById("phoneView").innerHTML = phone;
+            document.getElementById("emailView").innerHTML = email;
+            document.getElementById("addressView").innerHTML = address;
+        }
+
+        // Xoá lịch sử lưu trên add modal
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+
+
         function setEmployeeEdit(employeeId, employeeName, positionName, levelName, departmentName, dateOfBirth, idNumber, salary, phone, email, address) {
             document.getElementById("employeeIdEdit").value = employeeId;
             document.getElementById("employeeNameEdit").value = employeeName;
-            // // ******
-            document.getElementById(positionName).selected = "true";
-            document.getElementById(levelName).selected = "true";
-            document.getElementById(departmentName).selected = "true";
 
-            // document.getElementById("levelIdEditSelected").value = levelId;
-            // document.getElementById("departmentIdEditSelected").value = departmentId;
-            // // ******
+            document.getElementById(positionName).selected = true;
+            document.getElementById(levelName).selected = true;
+            document.getElementById(departmentName).selected = true;
+
             document.getElementById("dateOfBirthEdit").value = dateOfBirth;
             document.getElementById("idNumberEdit").value = idNumber;
             document.getElementById("salaryEdit").value = salary;
             document.getElementById("phoneEdit").value = phone;
             document.getElementById("emailEdit").value = email;
             document.getElementById("addressEdit").value = address;
-
-            // // ******
         }
 
         function setEmployeeDelete(employeeIdDelete) {
@@ -347,138 +371,142 @@
     </script>
 </head>
 <body>
-<header class="row">
-    <div class="col-12">
 
-        <h1>Furama Manager</h1>
-        <%--        <h3><c:out value="${message}"></c:out></h3>--%>
-        <h3>${message}</h3>
-
-
-    </div>
-</header>
-<div class="row">
-    <div class="col-12">
-        <div class="search-box">
-            <form action="/list_employee?action=search_by_name" method="post">
-                <%--                    id="searchByNameForm"--%>
-                <div class="row">
-                    <input type="text" name="employeeNameSearch" id="employeeNameSearch" placeholder="Search by Name">
-                    <%--                        form="searchByNameForm"--%>
-                    <button type="submit" value="submit" class="btn btn-info">
-                        <i class="material-icons">search</i>
-                    </button>
-                </div>
-            </form>
+<div class="container-fluid">
+    <%--    header--%>
+    <header class="row">
+        <div class="col-12">
+            <h1>Furama Manager</h1>
+            <h3>${message}</h3>
+        </div>
+    </header>
+    <%--    search-box--%>
+    <div class="row">
+        <div class="col-12">
+            <div class="search-box">
+                <form action="/list_employee?action=search_by_name" method="get">
+                    <div class="row">
+                        <input type="text" name="employeeNameSearch" id="employeeNameSearch"
+                               placeholder="Search by Name">
+                        <button type="submit" value="submit" class="btn btn-info">
+                            <i class="material-icons">search</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<div class="container-fluid">
-    <div class="table-responsive">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-6 ">
-                        <h2><b>Employees</b></h2>
+    <%--    table-responsive--%>
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6 ">
+                                <h2><b>Employees</b></h2>
+                            </div>
+                            <div class="col-sm-6 ">
+                                <!--						href  đến form add new -->
+                                <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
+                                    <i class="material-icons">add_circle</i> <span>Add New Employee</span></a>
+                                <!--						href đến confirm delete-->
+                                <%--                        <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i--%>
+                                <%--                                class="material-icons">remove_circle</i> <span>Delete</span></a>--%>
+                                <a href="/list_employee?action=list" class="btn btn-info">
+                                    <i class="material-icons">view_list</i>
+                                    <span>Employee List</span>
+                                </a>
+                                <a href="../index.jsp" class="btn btn-primary">
+                                    <i class="material-icons">home</i>
+                                    <span>Home</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-6 ">
-                        <!--						href  đến form add new -->
-                        <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
-                            <i class="material-icons">add_circle</i> <span>Add New Employee</span></a>
-                        <!--						href đến confirm delete-->
-                        <%--                        <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i--%>
-                        <%--                                class="material-icons">remove_circle</i> <span>Delete</span></a>--%>
-                        <a href="../index.jsp" class="btn btn-danger">
-                            <i class="material-icons">home</i>
-                            <span>Home</span>
-                        </a>
-                    </div>
+                    <table class="table table-striped table-hover" id="employeeTable">
+                        <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Employee Name</th>
+                            <th>Position Name</th>
+                            <th>Level Name</th>
+                            <th>Department Name</th>
+                            <th>Date Of Birth</th>
+                            <th>ID Number</th>
+                            <th>Salary</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="employeeDTO" items='${requestScope["employeeDTOList"]}'>
+                            <tr>
+                                <td>${employeeDTO.getEmployeeId()}</td>
+                                <td>
+                                    <a href="#viewEmployeeModal" data-toggle="modal"
+                                       onclick="setEmployeeView(
+                                               '${employeeDTO.getEmployeeId()}',
+                                               '${employeeDTO.getEmployeeName()}',
+                                               '${employeeDTO.getPositionName()}',
+                                               '${employeeDTO.getLevelName()}',
+                                               '${employeeDTO.getDepartmentName()}',
+                                               '${employeeDTO.getDateOfBirth()}',
+                                               '${employeeDTO.getIdNumber()}',
+                                               '${employeeDTO.getSalary()}',
+                                               '${employeeDTO.getPhone()}',
+                                               '${employeeDTO.getEmail()}',
+                                               '${employeeDTO.getAddress()}'
+                                               )"
+                                    >
+                                            ${employeeDTO.getEmployeeName()}
+                                    </a>
+                                </td>
+                                <td>${employeeDTO.getPositionName()}</td>
+                                <td>${employeeDTO.getLevelName()}</td>
+                                <td>${employeeDTO.getDepartmentName()}</td>
+                                <td>${employeeDTO.getDateOfBirth()}</td>
+                                <td>${employeeDTO.getIdNumber()}</td>
+                                <td>${employeeDTO.getSalary()}</td>
+                                <td>${employeeDTO.getPhone()}</td>
+                                <td>${employeeDTO.getEmail()}</td>
+                                <td>${employeeDTO.getAddress()}</td>
+                                <td>
+                                    <a href="#editEmployeeModal" class="edit" data-toggle="modal"
+                                       onclick="setEmployeeEdit(
+                                               '${employeeDTO.getEmployeeId()}',
+                                               '${employeeDTO.getEmployeeName()}',
+                                               '${employeeDTO.getPositionName()}',
+                                               '${employeeDTO.getLevelName()}',
+                                               '${employeeDTO.getDepartmentName()}',
+                                               '${employeeDTO.getDateOfBirth()}',
+                                               '${employeeDTO.getIdNumber()}',
+                                               '${employeeDTO.getSalary()}',
+                                               '${employeeDTO.getPhone()}',
+                                               '${employeeDTO.getEmail()}',
+                                               '${employeeDTO.getAddress()}'
+                                               );">
+
+                                        <i class="material-icons" data-toggle="tooltip" title="Edit">mode_edit</i>
+                                    </a>
+                                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"
+                                       onclick="setEmployeeDelete('${employeeDTO.getEmployeeId()}')">
+                                        <i class="material-icons" data-toggle="tooltip" title="Delete">delete</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <table class="table table-striped table-hover" id="employeeTable">
-                <thead>
-                <tr>
-                    <th>Employee ID</th>
-                    <th>Employee Name</th>
-                    <th>Posittion Name</th>
-                    <th>Level Name</th>
-                    <th>Department Name</th>
-                    <th>Date Of Birth</th>
-                    <th>ID Number</th>
-                    <th>Salary</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="employeeDTO" items='${requestScope["employeeDTOList"]}'>
-                    <tr>
-                        <td>${employeeDTO.getEmployeeId()}</td>
-                        <td>
-                            <a href="/list_employee?action=view&id=${employeeDTO.getEmployeeId()}">
-                                    ${employeeDTO.getEmployeeName()}
-                            </a>
-                        </td>
-                        <td>${employeeDTO.getPositionName()}</td>
-                        <td>${employeeDTO.getLevelName()}</td>
-                        <td>${employeeDTO.getDepartmentName()}</td>
-                        <td>${employeeDTO.getDateOfBirth()}</td>
-                        <td>${employeeDTO.getIdNumber()}</td>
-                        <td>${employeeDTO.getSalary()}</td>
-                        <td>${employeeDTO.getPhone()}</td>
-                        <td>${employeeDTO.getEmail()}</td>
-                        <td>${employeeDTO.getAddress()}</td>
-                        <td>
-                                <%--                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"--%>
-                                <%--                               onclick="setIdEmployeeEdit(--%>
-                                <%--                                   ${employeeDTO.getEmployeeId()},--%>
-                                <%--                                   ${employeeDTO.getEmployeeName()},--%>
-                                <%--                                   ${employeeDTO.getPositionId()},--%>
-                                <%--                                   ${employeeDTO.getPositionName()},--%>
-                                <%--                                   ${employeeDTO.getLevelId()},--%>
-                                <%--                                   ${employeeDTO.getLevelName()},--%>
-                                <%--                                   ${employeeDTO.getDepartmentId()},--%>
-                                <%--                                   ${employeeDTO.getDepartmentName()},--%>
-                                <%--                                   ${employeeDTO.getDateOfBirth()},--%>
-                                <%--                                   ${employeeDTO.getIdNumber()},--%>
-                                <%--                                   ${employeeDTO.getSalary()},--%>
-                                <%--                                   ${employeeDTO.getPhone()},--%>
-                                <%--                                   ${employeeDTO.getEmail()},--%>
-                                <%--                                   ${employeeDTO.getAddress()}--%>
-                                <%--                                       )">--%>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"
-                               onclick="setEmployeeEdit(
-                                       '${employeeDTO.getEmployeeId()}',
-                                       '${employeeDTO.getEmployeeName()}',
-                                       '${employeeDTO.getPositionName()}',
-                                       '${employeeDTO.getLevelName()}',
-                                       '${employeeDTO.getDepartmentName()}',
-                                       '${employeeDTO.getDateOfBirth()}',
-                                       '${employeeDTO.getIdNumber()}',
-                                       '${employeeDTO.getSalary()}',
-                                       '${employeeDTO.getPhone()}',
-                                       '${employeeDTO.getEmail()}',
-                                       '${employeeDTO.getAddress()}'
-                                       );">
-
-                                <i class="material-icons" data-toggle="tooltip" title="Edit">mode_edit</i>
-                            </a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"
-                               onclick="setEmployeeDelete('${employeeDTO.getEmployeeId()}')">
-                                <i class="material-icons" data-toggle="tooltip" title="Delete">delete</i>
-                            </a>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
 
-
+<%--Modal--%>
 <!-- Add Modal HTML -->
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
@@ -523,7 +551,7 @@
                     </div>
                     <div class="form-group">
                         <label>Date Of Birth</label>
-                        <input type="text" class="form-control" name="dateOfBirth" id="dateOfBirth">
+                        <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth">
                     </div>
                     <div class="form-group">
                         <label>ID Number</label>
@@ -616,7 +644,7 @@
                     </div>
                     <div class="form-group">
                         <label for="dateOfBirthEdit">Date Of Birth</label>
-                        <input type="text" class="form-control" name="dateOfBirthEdit" id="dateOfBirthEdit">
+                        <input type="date" class="form-control" name="dateOfBirthEdit" id="dateOfBirthEdit">
                     </div>
                     <div class="form-group">
                         <label for="idNumberEdit">ID Number</label>
@@ -659,9 +687,10 @@
                 <div class="modal-body">
                     <p>Are you sure you want to delete these Records?</p>
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
-                    <%--                    ******--%>
+
+                    <%--                    Input Employee ID delete --%>
                     <input type="hidden" name="employeeIdDelete" id="employeeIdDelete">
-                    <%--                    ******--%>
+
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -671,6 +700,67 @@
         </div>
     </div>
 </div>
-</body>
+<%-- View Modal--%>
+<div id="viewEmployeeModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Employee Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6"><p>Employee ID:</p></div>
+                    <div class="col-6"><p id="employeeIdView"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-6"><p>Employee Name:</p></div>
+                    <div class="col-6"><p id="employeeNameView"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-6"><p>Position Name:</p></div>
+                    <div class="col-6"><p id="positionNameView"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-6"><p>Level Name:</p></div>
+                    <div class="col-6"><p id="levelNameView"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-6"><p>Department Name:</p></div>
+                    <div class="col-6"><p id="departmentNameView"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-6"><p>Date Of Birth:</p></div>
+                    <div class="col-6"><p id="dateOfBirthView"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-6"><p>ID Number:</p></div>
+                    <div class="col-6"><p id="idNumberView"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-6"><p>Salary:</p></div>
+                    <div class="col-6"><p id="salaryView"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-6"><p>Phone:</p></div>
+                    <div class="col-6"><p id="phoneView"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-6"><p>Email:</p></div>
+                    <div class="col-6"><p id="emailView"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-6"><p>Address:</p></div>
+                    <div class="col-6"><p id="addressView"></p></div>
+                </div>
 
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
 </html>

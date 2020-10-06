@@ -10,7 +10,6 @@ import java.util.List;
 public class EmployeeBOImpl implements EmployeeBO {
     EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
-
     @Override
     public List<EmployeeDTO> listEmployee() {
         return this.employeeDAO.listEmployee();

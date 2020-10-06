@@ -6,7 +6,6 @@ import model.employee.Employee;
 import java.util.List;
 
 public interface EmployeeBO {
-
     List<EmployeeDTO> listEmployee();
 
     Employee searchEmployeeById(Integer id);
@@ -16,7 +15,6 @@ public interface EmployeeBO {
     boolean editEmployee(Employee employee);
 
     boolean deleteEmployee(Integer id);
-
 
     List<EmployeeDTO> searchEmployeeByName(String name);
 }
