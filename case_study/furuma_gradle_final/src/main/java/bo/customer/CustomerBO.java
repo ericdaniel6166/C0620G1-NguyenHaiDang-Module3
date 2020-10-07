@@ -8,13 +8,13 @@ import java.util.List;
 public interface CustomerBO {
     List<CustomerDTO> listCustomer();
 
-    boolean addCustomer(Customer customer);
+    String addCustomer(Customer customer);
 
-    boolean editCustomer(Customer customer);
+    String editCustomer(Customer customer);
 
-    boolean deleteCustomer(Integer id);
+    String deleteCustomer(String id);
 
-    CustomerDTO searchCustomerById(Integer id);
+    CustomerDTO searchCustomerById(String id);
 
     List<CustomerDTO> searchCustomerByName(String name);
 }

@@ -8,13 +8,13 @@ import java.util.List;
 public interface EmployeeBO {
     List<EmployeeDTO> listEmployee();
 
-    boolean addEmployee(Employee employee);
+    String addEmployee(Employee employee);
 
-    boolean editEmployee(Employee employee);
+    String editEmployee(Employee employee);
 
-    boolean deleteEmployee(Integer id);
+    String deleteEmployee(String id);
 
-    Employee searchEmployeeById(Integer id);
+    Employee searchEmployeeById(String id);
 
     List<EmployeeDTO> searchEmployeeByName(String name);
 }

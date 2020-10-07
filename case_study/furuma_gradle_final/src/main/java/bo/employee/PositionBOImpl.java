@@ -15,7 +15,7 @@ public class PositionBOImpl implements PositionBO {
     }
 
     @Override
-    public Position searchPositionById(Integer id) {
+    public Position searchPositionById(String id) {
         return positionDAO.searchPositionById(id);
     }
 }

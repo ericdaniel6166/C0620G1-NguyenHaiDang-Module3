@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TypeOfCustomerDAOImpl implements TypeOfCustomerDAO {
-    private static final String SELECT_ALL_TYPE_OF_CUSTOMER = "SELECT * FROM types_of_customer;";
-    private static final String SEARCH_TYPE_OF_CUSTOMER_BY_ID = "SELECT * FROM types_of_customer WHERE type_of_customer_id =?;";
+    private static final String LIST_TYPE_OF_CUSTOMER = "SELECT * FROM types_of_customer;";
+    private static final String VIEW_TYPE_OF_CUSTOMER = "SELECT * FROM types_of_customer WHERE type_of_customer_id =?;";
 
     private BaseDAO baseDAO = new BaseDAO();
 
@@ -19,10 +19,10 @@ public class TypeOfCustomerDAOImpl implements TypeOfCustomerDAO {
     public List<TypeOfCustomer> listTypeOfCustomer() {
         List<TypeOfCustomer> typeOfCustomerList = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_ALL_TYPE_OF_CUSTOMER);
+            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(LIST_TYPE_OF_CUSTOMER);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Integer typeOfCustomerId = Integer.valueOf(resultSet.getString("type_of_customer_id"));
+                String typeOfCustomerId = String.valueOf(resultSet.getString("type_of_customer_id"));
                 String typeOfCustomerName = resultSet.getString("type_name");
                 TypeOfCustomer typeOfCustomer = new TypeOfCustomer(typeOfCustomerId, typeOfCustomerName);
                 typeOfCustomerList.add(typeOfCustomer);
@@ -34,14 +34,14 @@ public class TypeOfCustomerDAOImpl implements TypeOfCustomerDAO {
     }
 
     @Override
-    public TypeOfCustomer searchTypeOfCustomerById(Integer id) {
+    public TypeOfCustomer searchTypeOfCustomerById(String id) {
         TypeOfCustomer typeOfCustomer = null;
         try {
-            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SEARCH_TYPE_OF_CUSTOMER_BY_ID);
-            preparedStatement.setInt(1, id);
+            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(VIEW_TYPE_OF_CUSTOMER);
+            preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Integer typeOfCustomerId = Integer.valueOf(resultSet.getString("type_of_customer_id"));
+                String typeOfCustomerId = String.valueOf(resultSet.getString("type_of_customer_id"));
                 String typeOfCustomerName = resultSet.getString("type_name");
                 typeOfCustomer = new TypeOfCustomer(typeOfCustomerId, typeOfCustomerName);
             }

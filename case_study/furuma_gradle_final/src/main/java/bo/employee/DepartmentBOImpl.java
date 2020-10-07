@@ -15,7 +15,7 @@ public class DepartmentBOImpl implements DepartmentBO {
     }
 
     @Override
-    public Department searchDepartmentById(Integer id) {
+    public Department searchDepartmentById(String id) {
         return departmentDAO.searchDepartmentById(id);
     }
 }

@@ -21,11 +21,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <%--    cdn bootstrap 4.3--%>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous"></script>
 
     <%--    cdn datatable Pagination, Instant search, Multi-column ordering--%>
     <%--    https://datatables.net/--%>
@@ -43,7 +50,7 @@
         }
 
         header {
-            text-align: center;
+            /*text-align: left;*/
         }
 
         .search-box {
@@ -316,59 +323,7 @@
         }
     </style>
     <!--	custom js-->
-    <script>
-        function setEmployeeView(employeeId, employeeName, positionName, levelName, departmentName, dateOfBirth, idNumber, salary, phone, email, address) {
-            document.getElementById("employeeIdView").innerHTML = employeeId;
-            document.getElementById("employeeNameView").innerHTML = employeeName;
 
-            document.getElementById("positionNameView").innerHTML = positionName;
-            document.getElementById("levelNameView").innerHTML = levelName;
-            document.getElementById("departmentNameView").innerHTML = departmentName;
-
-            document.getElementById("dateOfBirthView").innerHTML = dateOfBirth;
-            document.getElementById("idNumberView").innerHTML = idNumber;
-            document.getElementById("salaryView").innerHTML = salary;
-            document.getElementById("phoneView").innerHTML = phone;
-            document.getElementById("emailView").innerHTML = email;
-            document.getElementById("addressView").innerHTML = address;
-        }
-
-        // Xoá lịch sử lưu trên add modal
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
-        }
-
-
-        function setEmployeeEdit(employeeId, employeeName, positionName, levelName, departmentName, dateOfBirth, idNumber, salary, phone, email, address) {
-            document.getElementById("employeeIdEdit").value = employeeId;
-            document.getElementById("employeeNameEdit").value = employeeName;
-
-            document.getElementById(positionName).selected = true;
-            document.getElementById(levelName).selected = true;
-            document.getElementById(departmentName).selected = true;
-
-            document.getElementById("dateOfBirthEdit").value = dateOfBirth;
-            document.getElementById("idNumberEdit").value = idNumber;
-            document.getElementById("salaryEdit").value = salary;
-            document.getElementById("phoneEdit").value = phone;
-            document.getElementById("emailEdit").value = email;
-            document.getElementById("addressEdit").value = address;
-        }
-
-        function setEmployeeDelete(employeeIdDelete) {
-            document.getElementById("employeeIdDelete").value = employeeIdDelete;
-        }
-
-        $(document).ready(function () {
-            // Activate tooltip
-            $('[data-toggle="tooltip"]').tooltip();
-
-            // Pagination, Instant search, Multi-column ordering
-            // https://datatables.net/
-            $('#employeeTable').DataTable();
-
-        });
-    </script>
 </head>
 <body>
 
@@ -384,7 +339,7 @@
     <div class="row">
         <div class="col-12">
             <div class="search-box">
-                <form action="/list_employee?action=search_by_name" method="get">
+                <form action="/list_employee?action=search_by_name" method="post">
                     <div class="row">
                         <input type="text" name="employeeNameSearch" id="employeeNameSearch"
                                placeholder="Search by Name">
@@ -403,10 +358,10 @@
                 <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">
-                            <div class="col-sm-6 ">
+                            <div class="col-sm-3 ">
                                 <h2><b>Employee List</b></h2>
                             </div>
-                            <div class="col-sm-6 ">
+                            <div class="col-sm-9 ">
                                 <!--						href  đến form add new -->
                                 <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
                                     <i class="material-icons">add_circle</i> <span>Add New Employee</span></a>
@@ -417,7 +372,7 @@
                                     <i class="material-icons">view_list</i>
                                     <span>Employee List</span>
                                 </a>
-                                <a href="../index.jsp" class="btn btn-primary">
+                                <a href="../../index.jsp" class="btn btn-primary">
                                     <i class="material-icons">home</i>
                                     <span>Home</span>
                                 </a>
@@ -461,7 +416,9 @@
                                                '${employeeDTO.getAddress()}'
                                                )"
                                     >
-                                            ${employeeDTO.getEmployeeName()}
+                                        <div data-toggle="tooltip" title="View">
+                                                ${employeeDTO.getEmployeeName()}
+                                        </div>
                                     </a>
                                 </td>
                                 <td>${employeeDTO.getPositionName()}</td>
@@ -478,9 +435,9 @@
                                        onclick="setEmployeeEdit(
                                                '${employeeDTO.getEmployeeId()}',
                                                '${employeeDTO.getEmployeeName()}',
-                                               '${employeeDTO.getPositionName()}',
-                                               '${employeeDTO.getLevelName()}',
-                                               '${employeeDTO.getDepartmentName()}',
+                                               '${employeeDTO.getPositionId()}',
+                                               '${employeeDTO.getLevelId()}',
+                                               '${employeeDTO.getDepartmentId()}',
                                                '${employeeDTO.getDateOfBirth()}',
                                                '${employeeDTO.getIdNumber()}',
                                                '${employeeDTO.getSalary()}',
@@ -575,7 +532,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
                     <input type="submit" class="btn btn-success" value="Add">
                 </div>
             </form>
@@ -603,13 +560,8 @@
                     <div class="form-group">
                         <label for="positionIdEdit">Position ID</label>
                         <select class="form-control" name="positionIdEdit" id="positionIdEdit">
-                            <%--                            <option selected id="positionIdEditSelected"></option>--%>
                             <c:forEach var="position" items="${requestScope['positionList']}">
-
-                                <option
-                                        value="${position.getPositionId()}"
-                                        id="${position.getPositionName()}"
-                                >
+                                <option value="${position.getPositionId()}">
                                         ${position.getPositionName()}
                                 </option>
 
@@ -620,10 +572,7 @@
                         <label for="levelIdEdit">Level ID</label>
                         <select class="form-control" name="levelIdEdit" id="levelIdEdit">
                             <c:forEach var="level" items="${requestScope['levelList']}">
-                                <option
-                                        value="${level.getLevelId()}"
-                                        id="${level.getLevelName()}"
-                                >
+                                <option value="${level.getLevelId()}">
                                         ${level.getLevelName()}
                                 </option>
                             </c:forEach>
@@ -633,10 +582,7 @@
                         <label for="departmentIdEdit">Department ID</label>
                         <select class="form-control" name="departmentIdEdit" id="departmentIdEdit">
                             <c:forEach var="department" items="${requestScope['departmentList']}">
-                                <option
-                                        value="${department.getDepartmentId()}"
-                                        id="${department.getDepartmentName()}"
-                                >
+                                <option value="${department.getDepartmentId()}">
                                         ${department.getDepartmentName()}
                                 </option>
                             </c:forEach>
@@ -668,7 +614,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
                     <input type="submit" class="btn btn-info" value="Save">
                 </div>
             </form>
@@ -693,7 +639,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
                     <input type="submit" class="btn btn-danger" value="Delete">
                 </div>
             </form>
@@ -756,11 +702,64 @@
 
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function setEmployeeView(employeeId, employeeName, positionName, levelName, departmentName, dateOfBirth, idNumber, salary, phone, email, address) {
+        document.getElementById("employeeIdView").innerHTML = employeeId;
+        document.getElementById("employeeNameView").innerHTML = employeeName;
+
+        document.getElementById("positionNameView").innerHTML = positionName;
+        document.getElementById("levelNameView").innerHTML = levelName;
+        document.getElementById("departmentNameView").innerHTML = departmentName;
+
+        document.getElementById("dateOfBirthView").innerHTML = dateOfBirth;
+        document.getElementById("idNumberView").innerHTML = idNumber;
+        document.getElementById("salaryView").innerHTML = salary;
+        document.getElementById("phoneView").innerHTML = phone;
+        document.getElementById("emailView").innerHTML = email;
+        document.getElementById("addressView").innerHTML = address;
+    }
+
+    // Xoá lịch sử lưu trên add modal
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+
+
+    function setEmployeeEdit(employeeId, employeeName, positionId, levelId, departmentId, dateOfBirth, idNumber, salary, phone, email, address) {
+        document.getElementById("employeeIdEdit").value = employeeId;
+        document.getElementById("employeeNameEdit").value = employeeName;
+
+        document.getElementById('positionIdEdit').value = positionId;
+        document.getElementById('levelIdEdit').value = levelId;
+        document.getElementById('departmentIdEdit').value = departmentId;
+
+        document.getElementById("dateOfBirthEdit").value = dateOfBirth;
+        document.getElementById("idNumberEdit").value = idNumber;
+        document.getElementById("salaryEdit").value = salary;
+        document.getElementById("phoneEdit").value = phone;
+        document.getElementById("emailEdit").value = email;
+        document.getElementById("addressEdit").value = address;
+    }
+
+    function setEmployeeDelete(employeeIdDelete) {
+        document.getElementById("employeeIdDelete").value = employeeIdDelete;
+    }
+
+    $(document).ready(function () {
+        // Activate tooltip
+        $('[data-toggle="tooltip"]').tooltip();
+
+        // Pagination, Instant search, Multi-column ordering
+        // https://datatables.net/
+        $('#employeeTable').DataTable();
+    });
+</script>
 
 </body>
 </html>

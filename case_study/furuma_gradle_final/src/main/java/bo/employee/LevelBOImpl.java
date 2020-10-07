@@ -15,7 +15,7 @@ public class LevelBOImpl implements LevelBO {
     }
 
     @Override
-    public Level searchLevelById(Integer id) {
+    public Level searchLevelById(String id) {
         return levelDAO.searchLevelById(id);
     }
 }

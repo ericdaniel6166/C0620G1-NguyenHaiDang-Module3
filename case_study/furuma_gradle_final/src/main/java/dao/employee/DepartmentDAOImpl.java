@@ -21,7 +21,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_ALL_DEPARTMENTS);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Integer departmentId = Integer.valueOf(resultSet.getString("department_id"));
+                String departmentId = (resultSet.getString("department_id"));
                 String departmentName = resultSet.getString("department_name");
                 Department department = new Department(departmentId, departmentName);
                 departmentList.add(department);
@@ -33,14 +33,14 @@ public class DepartmentDAOImpl implements DepartmentDAO {
     }
 
     @Override
-    public Department searchDepartmentById(Integer id) {
+    public Department searchDepartmentById(String id) {
         Department department = null;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_DEPARTMENT_NAME_BY_ID);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Integer departmentId = Integer.valueOf(resultSet.getString("department_id"));
+                String departmentId = (resultSet.getString("department_id"));
                 String departmentName = resultSet.getString("department_name");
                 department = new Department(departmentId, departmentName);
             }

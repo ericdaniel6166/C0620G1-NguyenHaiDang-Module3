@@ -1,7 +1,7 @@
 package model.employee;
 
 public class Department {
-    private Integer departmentId;
+    private String departmentId;
     private String departmentName;
 
     @Override
@@ -12,11 +12,11 @@ public class Department {
                 '}';
     }
 
-    public Integer getDepartmentId() {
+    public String getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(Integer departmentId) {
+    public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
     }
 
@@ -28,7 +28,7 @@ public class Department {
         this.departmentName = departmentName;
     }
 
-    public Department(Integer departmentId, String departmentName) {
+    public Department(String departmentId, String departmentName) {
         this.departmentId = departmentId;
         this.departmentName = departmentName;
     }

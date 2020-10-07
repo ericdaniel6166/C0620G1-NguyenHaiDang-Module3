@@ -28,21 +28,21 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(LIST_EMPLOYEE_VIEW);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Integer employeeId = Integer.valueOf(resultSet.getString("employee_id"));
+                String employeeId = (resultSet.getString("employee_id"));
                 String employeeName = resultSet.getString("employee_name");
 
-                Integer positionId = Integer.valueOf(resultSet.getString("position_id"));
+                String positionId = (resultSet.getString("position_id"));
                 String positionName = resultSet.getString("position_name");
 
-                Integer levelId = Integer.valueOf(resultSet.getString("level_id"));
+                String levelId = (resultSet.getString("level_id"));
                 String levelName = resultSet.getString("level_name");
 
-                Integer departmentId = Integer.valueOf(resultSet.getString("department_id"));
+                String departmentId = (resultSet.getString("department_id"));
                 String departmentName = resultSet.getString("department_name");
 
                 String dateOfBirth = resultSet.getString("date_of_birth");
                 String idNumber = resultSet.getString("id_number");
-                double salary = Double.parseDouble(resultSet.getString("salary"));
+                String salary = (resultSet.getString("salary"));
                 String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String address = resultSet.getString("address");
@@ -60,20 +60,20 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         boolean rowInsert = false;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(INSERT_EMPLOYEE);
-            Integer employeeId = employee.getEmployeeId();
+            String employeeId = employee.getEmployeeId();
             if (employeeId != null) {
-                preparedStatement.setInt(1, employeeId);
+                preparedStatement.setString(1, employeeId);
             } else {
                 preparedStatement.setString(1, null);
             }
 
             preparedStatement.setString(2, employee.getEmployeeName());
-            preparedStatement.setInt(3, employee.getPositionId());
-            preparedStatement.setInt(4, employee.getLevelId());
-            preparedStatement.setInt(5, employee.getDepartmentId());
+            preparedStatement.setString(3, employee.getPositionId());
+            preparedStatement.setString(4, employee.getLevelId());
+            preparedStatement.setString(5, employee.getDepartmentId());
             preparedStatement.setString(6, employee.getDateOfBirth());
             preparedStatement.setString(7, employee.getIdNumber());
-            preparedStatement.setDouble(8, employee.getSalary());
+            preparedStatement.setString(8, employee.getSalary());
             preparedStatement.setString(9, employee.getPhone());
             preparedStatement.setString(10, employee.getEmail());
             preparedStatement.setString(11, employee.getAddress());
@@ -90,16 +90,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(UPDATE_EMPLOYEE);
             preparedStatement.setString(1, employee.getEmployeeName());
-            preparedStatement.setInt(2, employee.getPositionId());
-            preparedStatement.setInt(3, employee.getLevelId());
-            preparedStatement.setInt(4, employee.getDepartmentId());
+            preparedStatement.setString(2, employee.getPositionId());
+            preparedStatement.setString(3, employee.getLevelId());
+            preparedStatement.setString(4, employee.getDepartmentId());
             preparedStatement.setString(5, employee.getDateOfBirth());
             preparedStatement.setString(6, employee.getIdNumber());
-            preparedStatement.setDouble(7, employee.getSalary());
+            preparedStatement.setString(7, employee.getSalary());
             preparedStatement.setString(8, employee.getPhone());
             preparedStatement.setString(9, employee.getEmail());
             preparedStatement.setString(10, employee.getAddress());
-            preparedStatement.setInt(11, employee.getEmployeeId());
+            preparedStatement.setString(11, employee.getEmployeeId());
             rowUpdate = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,11 +109,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public boolean deleteEmployee(Integer id) {
+    public boolean deleteEmployee(String id) {
         boolean rowDelete = false;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(DELETE_EMPLOYEE);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
             rowDelete = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,21 +123,21 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public Employee searchEmployeeById(Integer id) {
+    public Employee searchEmployeeById(String id) {
         Employee employee = null;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SEARCH_EMPLOYEE_BY_ID_VIEW);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Integer employeeId = Integer.valueOf(resultSet.getString("employee_id"));
+                String employeeId = (resultSet.getString("employee_id"));
                 String employeeName = resultSet.getString("employee_name");
-                Integer positionId = Integer.valueOf(resultSet.getString("position_id"));
-                Integer levelId = Integer.valueOf(resultSet.getString("level_id"));
-                Integer departmentId = Integer.valueOf(resultSet.getString("department_id"));
+                String positionId = (resultSet.getString("position_id"));
+                String levelId = (resultSet.getString("level_id"));
+                String departmentId = (resultSet.getString("department_id"));
                 String dateOfBirth = resultSet.getString("date_of_birth");
                 String idNumber = resultSet.getString("id_number");
-                double salary = Double.parseDouble(resultSet.getString("salary"));
+                String salary = (resultSet.getString("salary"));
                 String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String address = resultSet.getString("address");
@@ -158,21 +158,21 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Integer employeeId = Integer.valueOf(resultSet.getString("employee_id"));
+                String employeeId = (resultSet.getString("employee_id"));
                 String employeeName = resultSet.getString("employee_name");
 
-                Integer positionId = Integer.valueOf(resultSet.getString("position_id"));
+                String positionId = (resultSet.getString("position_id"));
                 String positionName = resultSet.getString("position_name");
 
-                Integer levelId = Integer.valueOf(resultSet.getString("level_id"));
+                String levelId = (resultSet.getString("level_id"));
                 String levelName = resultSet.getString("level_name");
 
-                Integer departmentId = Integer.valueOf(resultSet.getString("department_id"));
+                String departmentId = (resultSet.getString("department_id"));
                 String departmentName = resultSet.getString("department_name");
 
                 String dateOfBirth = resultSet.getString("date_of_birth");
                 String idNumber = resultSet.getString("id_number");
-                double salary = Double.parseDouble(resultSet.getString("salary"));
+                String salary = (resultSet.getString("salary"));
                 String phone = resultSet.getString("phone");
                 String email = resultSet.getString("email");
                 String address = resultSet.getString("address");

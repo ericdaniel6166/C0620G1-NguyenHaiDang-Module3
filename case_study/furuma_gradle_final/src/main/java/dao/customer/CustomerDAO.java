@@ -12,9 +12,9 @@ public interface CustomerDAO {
 
     boolean editCustomer(Customer customer);
 
-    boolean deleteCustomer(Integer id);
+    boolean deleteCustomer(String id);
 
-    CustomerDTO searchCustomerById(Integer id);
+    CustomerDTO searchCustomerById(String id);
 
     List<CustomerDTO> searchCustomerByName(String name);
 }

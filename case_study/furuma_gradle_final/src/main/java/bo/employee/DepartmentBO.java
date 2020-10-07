@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface DepartmentBO {
     List<Department> listDepartment();
-    Department searchDepartmentById(Integer id);
+
+    Department searchDepartmentById(String id);
 }

@@ -1,17 +1,17 @@
 package dto.employee;
 
 public class EmployeeDTO {
-    private Integer employeeId;
+    private String employeeId;
     private String employeeName;
-    private Integer positionId;
+    private String positionId;
     private String positionName;
-    private Integer levelId;
+    private String levelId;
     private String levelName;
-    private Integer departmentId;
+    private String departmentId;
     private String departmentName;
     private String dateOfBirth;
     private String idNumber;
-    private Double salary;
+    private String salary;
     private String phone;
     private String email;
     private String address;
@@ -36,11 +36,11 @@ public class EmployeeDTO {
                 '}';
     }
 
-    public Integer getEmployeeId() {
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Integer employeeId) {
+    public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -52,11 +52,11 @@ public class EmployeeDTO {
         this.employeeName = employeeName;
     }
 
-    public Integer getPositionId() {
+    public String getPositionId() {
         return positionId;
     }
 
-    public void setPositionId(Integer positionId) {
+    public void setPositionId(String positionId) {
         this.positionId = positionId;
     }
 
@@ -68,11 +68,11 @@ public class EmployeeDTO {
         this.positionName = positionName;
     }
 
-    public Integer getLevelId() {
+    public String getLevelId() {
         return levelId;
     }
 
-    public void setLevelId(Integer levelId) {
+    public void setLevelId(String levelId) {
         this.levelId = levelId;
     }
 
@@ -84,11 +84,11 @@ public class EmployeeDTO {
         this.levelName = levelName;
     }
 
-    public Integer getDepartmentId() {
+    public String getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(Integer departmentId) {
+    public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
     }
 
@@ -116,11 +116,11 @@ public class EmployeeDTO {
         this.idNumber = idNumber;
     }
 
-    public Double getSalary() {
+    public String getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(String salary) {
         this.salary = salary;
     }
 
@@ -148,7 +148,7 @@ public class EmployeeDTO {
         this.address = address;
     }
 
-    public EmployeeDTO(Integer employeeId, String employeeName, Integer positionId, String positionName, Integer levelId, String levelName, Integer departmentId, String departmentName, String dateOfBirth, String idNumber, double salary, String phone, String email, String address) {
+    public EmployeeDTO(String employeeId, String employeeName, String positionId, String positionName, String levelId, String levelName, String departmentId, String departmentName, String dateOfBirth, String idNumber, String salary, String phone, String email, String address) {
         this.employeeId = employeeId;
         this.employeeName = employeeName;
         this.positionId = positionId;

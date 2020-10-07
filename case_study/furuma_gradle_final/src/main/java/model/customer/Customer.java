@@ -1,8 +1,8 @@
 package model.customer;
 
 public class Customer {
-    private Integer customerId;
-    private Integer typeOfCustomerId;
+    private String customerId;
+    private String typeOfCustomerId;
     private String customerName;
     private String dateOfBirth;
     private String idNumber;
@@ -24,19 +24,19 @@ public class Customer {
                 '}';
     }
 
-    public Integer getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Integer customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 
-    public Integer getTypeOfCustomerId() {
+    public String getTypeOfCustomerId() {
         return typeOfCustomerId;
     }
 
-    public void setTypeOfCustomerId(Integer typeOfCustomerId) {
+    public void setTypeOfCustomerId(String typeOfCustomerId) {
         this.typeOfCustomerId = typeOfCustomerId;
     }
 
@@ -88,7 +88,7 @@ public class Customer {
         this.address = address;
     }
 
-    public Customer(Integer customerId, Integer typeOfCustomerId, String customerName, String dateOfBirth, String idNumber, String phone, String email, String address) {
+    public Customer(String customerId, String typeOfCustomerId, String customerName, String dateOfBirth, String idNumber, String phone, String email, String address) {
         this.customerId = customerId;
         this.typeOfCustomerId = typeOfCustomerId;
         this.customerName = customerName;

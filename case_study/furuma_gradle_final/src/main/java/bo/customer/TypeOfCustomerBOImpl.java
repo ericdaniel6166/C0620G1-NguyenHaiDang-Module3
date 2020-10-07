@@ -15,7 +15,7 @@ public class TypeOfCustomerBOImpl implements TypeOfCustomerBO {
     }
 
     @Override
-    public TypeOfCustomer searchTypeOfCustomerById(Integer id) {
+    public TypeOfCustomer searchTypeOfCustomerById(String id) {
         return this.typeOfCustomerDAO.searchTypeOfCustomerById(id);
     }
 }

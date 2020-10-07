@@ -22,7 +22,7 @@ public class PositionDAOImpl implements PositionDAO {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_ALL_POSITIONS);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Integer positionId = Integer.valueOf(resultSet.getString("position_id"));
+                String positionId = String.valueOf(resultSet.getString("position_id"));
                 String positionName = resultSet.getString("position_name");
                 Position position = new Position(positionId, positionName);
                 positionList.add(position);
@@ -33,14 +33,14 @@ public class PositionDAOImpl implements PositionDAO {
         return positionList;
     }
     @Override
-    public Position searchPositionById(Integer id) {
+    public Position searchPositionById(String id) {
         Position position = null;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_POSITION_NAME_BY_ID);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                Integer positionId = Integer.valueOf(resultSet.getString("position_id"));
+                String positionId = String.valueOf(resultSet.getString("position_id"));
                 String positionName =resultSet.getString("position_name");
                 position = new Position(positionId, positionName);
             }

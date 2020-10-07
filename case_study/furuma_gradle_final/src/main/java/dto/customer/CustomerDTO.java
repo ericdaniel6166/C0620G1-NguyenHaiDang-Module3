@@ -1,8 +1,8 @@
 package dto.customer;
 
 public class CustomerDTO {
-    private Integer customerId;
-    private Integer typeOfCustomerId;
+    private String customerId;
+    private String typeOfCustomerId;
     private String typeOfCustomerName;
     private String customerName;
     private String dateOfBirth;
@@ -26,19 +26,19 @@ public class CustomerDTO {
                 '}';
     }
 
-    public Integer getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Integer customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 
-    public Integer getTypeOfCustomerId() {
+    public String getTypeOfCustomerId() {
         return typeOfCustomerId;
     }
 
-    public void setTypeOfCustomerId(Integer typeOfCustomerId) {
+    public void setTypeOfCustomerId(String typeOfCustomerId) {
         this.typeOfCustomerId = typeOfCustomerId;
     }
 
@@ -98,7 +98,7 @@ public class CustomerDTO {
         this.address = address;
     }
 
-    public CustomerDTO(Integer customerId, Integer typeOfCustomerId, String typeOfCustomerName, String customerName, String dateOfBirth, String idNumber, String phone, String email, String address) {
+    public CustomerDTO(String customerId, String typeOfCustomerId, String typeOfCustomerName, String customerName, String dateOfBirth, String idNumber, String phone, String email, String address) {
         this.customerId = customerId;
         this.typeOfCustomerId = typeOfCustomerId;
         this.typeOfCustomerName = typeOfCustomerName;

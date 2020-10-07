@@ -12,9 +12,9 @@ public interface EmployeeDAO {
 
     boolean editEmployee(Employee employee);
 
-    boolean deleteEmployee(Integer id);
+    boolean deleteEmployee(String id);
 
-    Employee searchEmployeeById(Integer id);
+    Employee searchEmployeeById(String id);
 
     List<EmployeeDTO> searchEmployeeByName(String name);
 

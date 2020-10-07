@@ -7,5 +7,5 @@ import java.util.List;
 public interface PositionBO {
     List<Position> listPosition();
 
-    Position searchPositionById(Integer id);
+    Position searchPositionById(String id);
 }

@@ -22,7 +22,7 @@ public class LevelDAOImpl implements LevelDAO {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_ALL_LEVELS);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Integer levelId = Integer.valueOf(resultSet.getString("level_id"));
+                String levelId = (resultSet.getString("level_id"));
                 String levelName = resultSet.getString("level_name");
                 Level level = new Level(levelId, levelName);
                 levelList.add(level);
@@ -34,14 +34,14 @@ public class LevelDAOImpl implements LevelDAO {
     }
 
     @Override
-    public Level searchLevelById(Integer id) {
+    public Level searchLevelById(String id) {
         Level level = null;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_LEVEL_NAME_BY_ID);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                Integer levelId = Integer.valueOf(resultSet.getString("level_id"));
+                String levelId = (resultSet.getString("level_id"));
                 String levelName =resultSet.getString("level_name");
                 level = new Level(levelId, levelName);
             }

@@ -21,11 +21,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <%--    cdn bootstrap 4.3--%>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous"></script>
 
     <%--    cdn datatable Pagination, Instant search, Multi-column ordering--%>
     <%--    https://datatables.net/--%>
@@ -384,7 +391,7 @@
     <div class="row">
         <div class="col-12">
             <div class="search-box">
-                <form action="/list_employee?action=search_by_name" method="get">
+                <form action="/list_employee?action=search_by_name" method="post">
                     <div class="row">
                         <input type="text" name="employeeNameSearch" id="employeeNameSearch"
                                placeholder="Search by Name">
@@ -404,7 +411,7 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-6 ">
-                                <h2><b>Employees</b></h2>
+                                <h2><b>Employee List</b></h2>
                             </div>
                             <div class="col-sm-6 ">
                                 <!--						href  đến form add new -->
@@ -575,7 +582,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
                     <input type="submit" class="btn btn-success" value="Add">
                 </div>
             </form>
@@ -668,7 +675,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
                     <input type="submit" class="btn btn-info" value="Save">
                 </div>
             </form>
@@ -693,7 +700,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
                     <input type="submit" class="btn btn-danger" value="Delete">
                 </div>
             </form>
@@ -709,54 +716,54 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-6"><p>Employee ID:</p></div>
-                    <div class="col-6"><p id="employeeIdView"></p></div>
-                </div>
-                <div class="row">
-                    <div class="col-6"><p>Employee Name:</p></div>
-                    <div class="col-6"><p id="employeeNameView"></p></div>
-                </div>
-                <div class="row">
-                    <div class="col-6"><p>Position Name:</p></div>
-                    <div class="col-6"><p id="positionNameView"></p></div>
-                </div>
-                <div class="row">
-                    <div class="col-6"><p>Level Name:</p></div>
-                    <div class="col-6"><p id="levelNameView"></p></div>
-                </div>
-                <div class="row">
-                    <div class="col-6"><p>Department Name:</p></div>
-                    <div class="col-6"><p id="departmentNameView"></p></div>
-                </div>
-                <div class="row">
-                    <div class="col-6"><p>Date Of Birth:</p></div>
-                    <div class="col-6"><p id="dateOfBirthView"></p></div>
-                </div>
-                <div class="row">
-                    <div class="col-6"><p>ID Number:</p></div>
-                    <div class="col-6"><p id="idNumberView"></p></div>
-                </div>
-                <div class="row">
-                    <div class="col-6"><p>Salary:</p></div>
-                    <div class="col-6"><p id="salaryView"></p></div>
-                </div>
-                <div class="row">
-                    <div class="col-6"><p>Phone:</p></div>
-                    <div class="col-6"><p id="phoneView"></p></div>
-                </div>
-                <div class="row">
-                    <div class="col-6"><p>Email:</p></div>
-                    <div class="col-6"><p id="emailView"></p></div>
-                </div>
-                <div class="row">
-                    <div class="col-6"><p>Address:</p></div>
-                    <div class="col-6"><p id="addressView"></p></div>
-                </div>
 
-            </div>
-            <div class="modal-footer">
-                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                <h5>Employee ID:</h5>
+                <p id="employeeIdView"></p>
+
+
+                <h5>Employee Name:</h5>
+                <p id="employeeNameView"></p>
+
+
+                <h5>Position Name:</h5>
+                <p id="positionNameView"></p>
+
+
+                <h5>Level Name:</h5>
+                <p id="levelNameView"></p>
+
+
+                <h5>Department Name:</h5>
+                <p id="departmentNameView"></p>
+
+
+                <h5>Date Of Birth:</h5>
+                <p id="dateOfBirthView"></p>
+
+
+                <h5>ID Number:</h5>
+                <p id="idNumberView"></p>
+
+
+                <h5>Salary:</h5>
+                <p id="salaryView"></p>
+
+
+                <h5>Phone:</h5>
+                <p id="phoneView"></p>
+
+
+                <h5>Email:</h5>
+                <p id="emailView"></p>
+
+
+                <h5>Address:</h5>
+                <p id="addressView"></p>
+
+
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
+                </div>
             </div>
         </div>
     </div>

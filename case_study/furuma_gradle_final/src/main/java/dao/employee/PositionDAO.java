@@ -7,5 +7,5 @@ import java.util.List;
 public interface PositionDAO {
     List<Position> listPosition();
 
-    Position searchPositionById(Integer id);
+    Position searchPositionById(String id);
 }

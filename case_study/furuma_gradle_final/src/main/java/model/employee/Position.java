@@ -1,22 +1,22 @@
 package model.employee;
 
 public class Position {
-    private Integer positionId;
+    private String positionId;
     private String positionName;
 
     public Position() {
     }
 
-    public Position(Integer positionId, String positionName) {
+    public Position(String positionId, String positionName) {
         this.positionId = positionId;
         this.positionName = positionName;
     }
 
-    public Integer getPositionId() {
+    public String getPositionId() {
         return positionId;
     }
 
-    public void setPositionId(Integer positionId) {
+    public void setPositionId(String positionId) {
         this.positionId = positionId;
     }
 

@@ -34,17 +34,57 @@ public class EmployeeServlet extends HttpServlet {
         switch (action) {
             case "add":
                 addEmployee(request, response);
+                listEmployee(request, response);
                 break;
             case "edit":
                 editEmployee(request, response);
+                listEmployee(request, response);
                 break;
             case "delete":
                 deleteEmployee(request, response);
+                listEmployee(request, response);
+                break;
+            case "search_by_name":
+                searchEmployeeByName(request, response);
                 break;
             default:
                 break;
         }
-        listEmployee(request, response);
+
+    }
+
+    private String searchEmployeeByName(HttpServletRequest request, HttpServletResponse response) {
+        boolean employeeSearched = false;
+        String message = "";
+        List<EmployeeDTO> employeeDTOList = null;
+        try {
+            String employeeNameSearch = request.getParameter("employeeNameSearch");
+            employeeDTOList = this.employeeBO.searchEmployeeByName(employeeNameSearch);
+            if (employeeDTOList == null) {
+                message += "Employee Name " + '"' + employeeNameSearch + '"' + " is not found";
+            } else {
+                message = "Employee Name " + '"' + employeeNameSearch + '"';
+            }
+
+            request.setAttribute("employeeDTOList", employeeDTOList);
+            request.setAttribute("message", message);
+
+            List<Position> positionList = this.positionBO.listPosition();
+            request.setAttribute("positionList", positionList);
+
+            List<Level> levelList = this.levelBO.listLevel();
+            request.setAttribute("levelList", levelList);
+
+            List<Department> departmentList = this.departmentBO.listDepartment();
+            request.setAttribute("departmentList", departmentList);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("employee/list_employee.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
+        return message;
     }
 
     private String editEmployee(HttpServletRequest request, HttpServletResponse response) {
@@ -213,45 +253,11 @@ public class EmployeeServlet extends HttpServlet {
 //                viewEmployee(request,response);
                 break;
             case "search_by_name":
-                searchEmployeeByName(request, response);
+//                searchEmployeeByName(request, response);
             default:
                 listEmployee(request, response);
                 break;
         }
-    }
-
-    private String searchEmployeeByName(HttpServletRequest request, HttpServletResponse response) {
-        boolean employeeSearched = false;
-        String message = "";
-        List<EmployeeDTO> employeeDTOList = null;
-        try {
-            String employeeNameSearch = request.getParameter("employeeNameSearch");
-            employeeDTOList = this.employeeBO.searchEmployeeByName(employeeNameSearch);
-            if (employeeDTOList == null) {
-                message += "Employee Name " + '"' + employeeNameSearch + '"' + " is not found";
-            } else {
-                message = "Employee Name " + '"' + employeeNameSearch + '"';
-            }
-
-            request.setAttribute("employeeDTOList", employeeDTOList);
-            request.setAttribute("message", message);
-
-            List<Position> positionList = this.positionBO.listPosition();
-            request.setAttribute("positionList", positionList);
-
-            List<Level> levelList = this.levelBO.listLevel();
-            request.setAttribute("levelList", levelList);
-
-            List<Department> departmentList = this.departmentBO.listDepartment();
-            request.setAttribute("departmentList", departmentList);
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("employee/list_employee.jsp");
-            dispatcher.forward(request, response);
-
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
-        return message;
     }
 
     private void listEmployee(HttpServletRequest request, HttpServletResponse response) {

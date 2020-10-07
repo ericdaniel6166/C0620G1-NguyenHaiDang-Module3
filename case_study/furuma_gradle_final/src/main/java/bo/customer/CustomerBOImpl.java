@@ -1,11 +1,14 @@
 package bo.customer;
 
+import common.Validator;
 import dao.customer.CustomerDAO;
 import dao.customer.CustomerDAOImpl;
 import dto.customer.CustomerDTO;
 import model.customer.Customer;
 
 import java.util.List;
+
+import static common.Validator.*;
 
 public class CustomerBOImpl implements CustomerBO {
     private CustomerDAO customerDAO = new CustomerDAOImpl();
@@ -16,22 +19,77 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     @Override
-    public boolean addCustomer(Customer customer) {
-        return this.customerDAO.addCustomer(customer);
+    public String addCustomer(Customer customer) {
+        String message = "";
+        boolean customerAdded = false;
+        if (customer.getCustomerId() != null && !Validator.regex(REGEX_POSITIVE_INTEGER, customer.getCustomerId())) {
+            message += "Invalid Customer ID: Customer ID is a positive integer. <br>";
+        }
+        if (this.searchCustomerById(customer.getCustomerId()) != null) {
+            message += "Invalid Customer ID: Customer ID already exists. <br>";
+        }
+        if (!Validator.regex(REGEX_NAME, customer.getCustomerName())) {
+            message += "Invalid name: Please input valid name (ex: An Binh). <br>";
+        }
+
+
+        if (!Validator.regex(REGEX_ID_NUMBER, customer.getIdNumber())) {
+            message += "Invalid ID Number: ID Number must be 9 or 12 digits. <br>";
+        }
+
+
+        if (!Validator.regex(REGEX_PHONE, customer.getPhone())) {
+            message += "Invalid Phone: Phone must be 090xxxxxxx or 091xxxxxxx or (84)+90xxxxxxx or (84)+91xxxxxxx. <br>";
+        }
+
+        if (!Validator.regex(REGEX_EMAIL, customer.getEmail())) {
+            message += "Invalid Email: Please input valid email (ex: abc_abc.abc@abc.abc.abc). <br>";
+        }
+        if ("".equals(message)) {
+            customerAdded = this.customerDAO.addCustomer(customer);
+            message = "Customer was successfully added.";
+        }
+        return message;
     }
 
     @Override
-    public boolean editCustomer(Customer customer) {
-        return this.customerDAO.editCustomer(customer);
+    public String editCustomer(Customer customer) {
+        String message = "";
+        boolean customerEdited = false;
+        if (!Validator.regex(REGEX_NAME, customer.getCustomerName())) {
+            message += "Invalid Name: Please input valid name. <br>";
+        }
+
+        if (!Validator.regex(REGEX_ID_NUMBER, customer.getIdNumber())) {
+            message += "Invalid ID Number: ID Number must be 9 or 12 digits. <br>";
+        }
+
+        if (!Validator.regex(REGEX_PHONE, customer.getPhone())) {
+            message += "Invalid Phone: Phone must be 090xxxxxxx or 091xxxxxxx or (84)+90xxxxxxx or (84)+91xxxxxxx. <br>";
+        }
+
+        if (!Validator.regex(REGEX_EMAIL, customer.getEmail())) {
+            message += "Invalid Email: Please input valid email (ex: abc_abc.abc@abc.abc.abc). <br>";
+        }
+        if ("".equals(message)) {
+            customerEdited = this.customerDAO.editCustomer(customer);
+            message = "Customer was successfully edited.";
+        }
+
+        return message;
     }
 
     @Override
-    public boolean deleteCustomer(Integer id) {
-        return this.customerDAO.deleteCustomer(id);
+    public String deleteCustomer(String id) {
+        String message = "";
+        boolean customerDeleted = false;
+        customerDeleted = this.customerDAO.deleteCustomer(id);
+        message = "Customer was successfully deleted.";
+        return message;
     }
 
     @Override
-    public CustomerDTO searchCustomerById(Integer id) {
+    public CustomerDTO searchCustomerById(String id) {
         return this.customerDAO.searchCustomerById(id);
     }
 

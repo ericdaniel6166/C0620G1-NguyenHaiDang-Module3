@@ -7,5 +7,5 @@ import java.util.List;
 public interface TypeOfCustomerDAO {
     List<TypeOfCustomer> listTypeOfCustomer();
 
-    TypeOfCustomer searchTypeOfCustomerById(Integer id);
+    TypeOfCustomer searchTypeOfCustomerById(String id);
 }

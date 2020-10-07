@@ -63,7 +63,7 @@
                     <%--                                        ***--%>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="/list_employee">Employee</a></li>
-                    <li><a href="Catagori.html">Customer</a></li>
+                    <li><a href="/list_customer">Customer</a></li>
                     <li><a href="Catagori.html">Service</a></li>
                     <li><a href="Catagori.html">Contract</a></li>
                   </ul>

@@ -17,7 +17,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     private static final String DELETE_CUSTOMER = "DELETE FROM customers WHERE customer_id = ?;";
 
     private static final String SEARCH_CUSTOMER_BY_ID_VIEW = "SELECT * FROM view_customers WHERE customer_id = ?;";
-    private static final String SEARCH_CUSTOMER_BY_NAME_VIEW = "SELECT * FROM view_customers WHERE customer_name CONCAT('%',?,'%');";
+    private static final String SEARCH_CUSTOMER_BY_NAME_VIEW = "SELECT * FROM view_customers WHERE customer_name LIKE CONCAT('%',?,'%');";
 
     private BaseDAO baseDAO = new BaseDAO();
 
@@ -28,9 +28,9 @@ public class CustomerDAOImpl implements CustomerDAO {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(LIST_CUSTOMER_VIEW);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Integer customerId = Integer.valueOf(resultSet.getString("customer_id"));
+                String customerId = String.valueOf(resultSet.getString("customer_id"));
 
-                Integer typeOfCustomerId = Integer.valueOf(resultSet.getString("type_of_customer_id"));
+                String typeOfCustomerId = String.valueOf(resultSet.getString("type_of_customer_id"));
                 String typeOfCustomerName = resultSet.getString("type_name");
 
                 String customerName = resultSet.getString("customer_name");
@@ -54,14 +54,14 @@ public class CustomerDAOImpl implements CustomerDAO {
         boolean rowInsert = false;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(INSERT_CUSTOMER);
-            Integer customerId = customer.getCustomerId();
+            String customerId = customer.getCustomerId();
             if (customerId != null) {
-                preparedStatement.setInt(1, customerId);
+                preparedStatement.setString(1, customerId);
             } else {
                 preparedStatement.setString(1, null);
             }
 
-            preparedStatement.setInt(2, customer.getTypeOfCustomerId());
+            preparedStatement.setString(2, customer.getTypeOfCustomerId());
 
             preparedStatement.setString(3, customer.getCustomerName());
 
@@ -82,7 +82,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         boolean rowUpdate = false;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(UPDATE_CUSTOMER);
-            preparedStatement.setInt(1, customer.getTypeOfCustomerId());
+            preparedStatement.setString(1, customer.getTypeOfCustomerId());
 
             preparedStatement.setString(2, customer.getCustomerName());
 
@@ -91,7 +91,7 @@ public class CustomerDAOImpl implements CustomerDAO {
             preparedStatement.setString(5, customer.getPhone());
             preparedStatement.setString(6, customer.getEmail());
             preparedStatement.setString(7, customer.getAddress());
-            preparedStatement.setInt(8, customer.getCustomerId());
+            preparedStatement.setString(8, customer.getCustomerId());
             rowUpdate = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,11 +100,11 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean deleteCustomer(Integer id) {
+    public boolean deleteCustomer(String id) {
         boolean rowDelete = false;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(DELETE_CUSTOMER);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
             rowDelete = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,16 +113,16 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public CustomerDTO searchCustomerById(Integer id) {
+    public CustomerDTO searchCustomerById(String id) {
         CustomerDTO customerDTO = null;
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SEARCH_CUSTOMER_BY_ID_VIEW);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Integer customerId = Integer.valueOf(resultSet.getString("customer_id"));
+                String customerId = String.valueOf(resultSet.getString("customer_id"));
 
-                Integer typeOfCustomerId = Integer.valueOf(resultSet.getString("type_of_customer_id"));
+                String typeOfCustomerId = String.valueOf(resultSet.getString("type_of_customer_id"));
                 String typeOfCustomerName = resultSet.getString("type_name");
 
                 String customerName = resultSet.getString("customer_name");
@@ -148,9 +148,9 @@ public class CustomerDAOImpl implements CustomerDAO {
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Integer customerId = Integer.valueOf(resultSet.getString("customer_id"));
+                String customerId = String.valueOf(resultSet.getString("customer_id"));
 
-                Integer typeOfCustomerId = Integer.valueOf(resultSet.getString("type_of_customer_id"));
+                String typeOfCustomerId = String.valueOf(resultSet.getString("type_of_customer_id"));
                 String typeOfCustomerName = resultSet.getString("type_name");
 
                 String customerName = resultSet.getString("customer_name");
