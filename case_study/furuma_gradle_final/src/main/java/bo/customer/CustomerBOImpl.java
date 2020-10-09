@@ -22,13 +22,13 @@ public class CustomerBOImpl implements CustomerBO {
     public String addCustomer(Customer customer) {
         String message = "";
         boolean customerAdded = false;
-        if (customer.getCustomerId() != null && !Validator.regex(REGEX_POSITIVE_INTEGER, customer.getCustomerId())) {
+        if (customer.getCustomerId() != null && !Validator.regex(REGEX_SERVICE_NAME, customer.getCustomerId())) {
             message += "Invalid Customer ID: Customer ID is a positive integer. <br>";
         }
         if (this.searchCustomerById(customer.getCustomerId()) != null) {
             message += "Invalid Customer ID: Customer ID already exists. <br>";
         }
-        if (!Validator.regex(REGEX_NAME, customer.getCustomerName())) {
+        if (!Validator.regex(REGEX_PERSON_NAME, customer.getCustomerName())) {
             message += "Invalid name: Please input valid name (ex: An Binh). <br>";
         }
 
@@ -56,7 +56,7 @@ public class CustomerBOImpl implements CustomerBO {
     public String editCustomer(Customer customer) {
         String message = "";
         boolean customerEdited = false;
-        if (!Validator.regex(REGEX_NAME, customer.getCustomerName())) {
+        if (!Validator.regex(REGEX_PERSON_NAME, customer.getCustomerName())) {
             message += "Invalid Name: Please input valid name. <br>";
         }
 

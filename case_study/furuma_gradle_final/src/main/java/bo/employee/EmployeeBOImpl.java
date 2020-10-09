@@ -23,13 +23,13 @@ public class EmployeeBOImpl implements EmployeeBO {
     public String addEmployee(Employee employee) {
         String message = "";
         boolean employeeAdded = false;
-        if (employee.getEmployeeId() != null && !Validator.regex(REGEX_POSITIVE_INTEGER, employee.getEmployeeId())) {
+        if (employee.getEmployeeId() != null && !Validator.regex(REGEX_SERVICE_NAME, employee.getEmployeeId())) {
             message += "Invalid Employee ID: Employee ID is a positive integer. <br>";
         }
         if (this.searchEmployeeById(employee.getEmployeeId()) != null) {
             message += "Invalid Employee ID: Employee ID already exists. <br>";
         }
-        if (!Validator.regex(REGEX_NAME, employee.getEmployeeName())) {
+        if (!Validator.regex(REGEX_PERSON_NAME, employee.getEmployeeName())) {
             message += "Invalid name: Please input valid name (ex: An Binh). <br>";
         }
         if (!Validator.regex(REGEX_ID_NUMBER, employee.getIdNumber())) {
@@ -55,7 +55,8 @@ public class EmployeeBOImpl implements EmployeeBO {
     public String editEmployee(Employee employee) {
         String message = "";
         boolean employeeEdited = false;
-        if (!Validator.regex(REGEX_NAME, employee.getEmployeeName())) {
+
+        if (!Validator.regex(REGEX_PERSON_NAME, employee.getEmployeeName())) {
             message += "Invalid Name: Please input valid name. <br>";
         }
         if (!Validator.regex(REGEX_ID_NUMBER, employee.getIdNumber())) {

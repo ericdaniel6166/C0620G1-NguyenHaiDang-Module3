@@ -444,7 +444,7 @@
                                                '${employeeDTO.getPhone()}',
                                                '${employeeDTO.getEmail()}',
                                                '${employeeDTO.getAddress()}'
-                                               );">
+                                               )">
 
                                         <i class="material-icons" data-toggle="tooltip" title="Edit">mode_edit</i>
                                     </a>

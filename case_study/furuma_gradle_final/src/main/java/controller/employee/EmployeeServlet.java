@@ -87,9 +87,6 @@ public class EmployeeServlet extends HttpServlet {
             String employeeIdEdit = (request.getParameter("employeeIdEdit"));
 
             String employeeNameEdit = request.getParameter("employeeNameEdit");
-//            if (!Validator.regex(REGEX_NAME, employeeNameEdit)) {
-//                message += "Invalid Name: Please input valid name. <br>";
-//            }
 
             String positionIdEdit = (request.getParameter("positionIdEdit"));
             String levelIdEdit = (request.getParameter("levelIdEdit"));
@@ -98,33 +95,17 @@ public class EmployeeServlet extends HttpServlet {
             String dateOfBirthEdit = request.getParameter("dateOfBirthEdit");
 
             String idNumberEdit = request.getParameter("idNumberEdit");
-//            if (!Validator.regex(REGEX_ID_NUMBER, idNumberEdit)) {
-//                message += "Invalid ID Number: ID Number must be 9 or 12 digits. <br>";
-//            }
 
             String salaryEditString = request.getParameter("salaryEdit");
-//            Double salaryEdit = null;
-//            if (!Validator.regex(REGEX_POSITIVE_NUMBER, salaryEditString)) {
-//                message += "Invalid Salary: Salary is a positive number. <br>";
-//            } else {
-//                salaryEdit = Double.valueOf(salaryEditString);
-//            }
 
             String phoneEdit = request.getParameter("phoneEdit");
-//            if (!Validator.regex(REGEX_PHONE, phoneEdit)) {
-//                message += "Invalid Phone: Phone must be 090xxxxxxx or 091xxxxxxx or (84)+90xxxxxxx or (84)+91xxxxxxx. <br>";
-//            }
 
             String emailEdit = request.getParameter("emailEdit");
-//            if (!Validator.regex(REGEX_EMAIL, emailEdit)) {
-//                message += "Invalid Email: Please input valid email (ex: abc_abc.abc@abc.abc.abc). <br>";
-//            }
 
             String addressEdit = request.getParameter("addressEdit");
 
-                Employee employee = new Employee(employeeIdEdit, employeeNameEdit, positionIdEdit, levelIdEdit, departmentIdEdit, dateOfBirthEdit, idNumberEdit, salaryEditString, phoneEdit, emailEdit, addressEdit);
-                message = this.employeeBO.editEmployee(employee);
-//                message = "Employee was successfully edited.";
+            Employee employee = new Employee(employeeIdEdit, employeeNameEdit, positionIdEdit, levelIdEdit, departmentIdEdit, dateOfBirthEdit, idNumberEdit, salaryEditString, phoneEdit, emailEdit, addressEdit);
+            message = this.employeeBO.editEmployee(employee);
 
             request.setAttribute("message", message);
 
@@ -139,7 +120,6 @@ public class EmployeeServlet extends HttpServlet {
         try {
             String employeeIdDelete = (request.getParameter("employeeIdDelete"));
             message = this.employeeBO.deleteEmployee(employeeIdDelete);
-//            message = "Employee was successfully deleted.";
 
             request.setAttribute("message", message);
 
@@ -149,28 +129,11 @@ public class EmployeeServlet extends HttpServlet {
     }
 
     private void addEmployee(HttpServletRequest request, HttpServletResponse response) {
-        //            Add
-//            ******
-//        boolean employeeAdded = false;
         String message = "";
         try {
             String employeeIdString = request.getParameter("employeeId");
-//            String employeeId = null;
-//            if (employeeIdString.equals("")) {
-//                employeeId = null;
-//            } else if (!Validator.regex(REGEX_POSITIVE_INTEGER, employeeIdString)) {
-//                message += "Invalid Employee ID: Employee ID is a positive integer. <br>";
-//            } else {
-//                employeeId = (employeeIdString);
-//                if (this.employeeBO.searchEmployeeById(employeeId) != null) {
-//                    message += "Invalid Employee ID: Employee ID already exists. <br>";
-//                }
-//            }
 
             String employeeName = request.getParameter("employeeName");
-//            if (!Validator.regex(REGEX_NAME, employeeName)) {
-//                message += "Invalid name: Please input valid name (ex: An Binh). <br>";
-//            }
 
             String positionId = (request.getParameter("positionId"));
 
@@ -181,32 +144,17 @@ public class EmployeeServlet extends HttpServlet {
             String dateOfBirth = request.getParameter("dateOfBirth");
 
             String idNumber = request.getParameter("idNumber");
-//            if (!Validator.regex(REGEX_ID_NUMBER, idNumber)) {
-//                message += "Invalid ID Number: ID Number must be 9 or 12 digits. <br>";
-//            }
 
             String salaryString = request.getParameter("salary");
-//            Double salary = null;
-//            if (!Validator.regex(REGEX_POSITIVE_NUMBER, salaryString)) {
-//                message += "Invalid Salary: Salary is a positive number. <br>";
-//            } else {
-//                salary = Double.valueOf(salaryString);
-//            }
 
             String phone = request.getParameter("phone");
-//            if (!Validator.regex(REGEX_PHONE, phone)) {
-//                message += "Invalid Phone: Phone must be 090xxxxxxx or 091xxxxxxx or (84)+90xxxxxxx or (84)+91xxxxxxx. <br>";
-//            }
 
             String email = request.getParameter("email");
-//            if (!Validator.regex(REGEX_EMAIL, email)) {
-//                message += "Invalid Email: Please input valid email (ex: abc_abc.abc@abc.abc.abc). <br>";
-//            }
 
             String address = request.getParameter("address");
 
-                Employee employee = new Employee(employeeIdString, employeeName, positionId, levelId, departmentId, dateOfBirth, idNumber, salaryString, phone, email, address);
-                message = this.employeeBO.addEmployee(employee);
+            Employee employee = new Employee(employeeIdString, employeeName, positionId, levelId, departmentId, dateOfBirth, idNumber, salaryString, phone, email, address);
+            message = this.employeeBO.addEmployee(employee);
 
             request.setAttribute("message", message);
 

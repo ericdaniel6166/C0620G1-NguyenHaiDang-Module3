@@ -185,7 +185,7 @@ public class CustomerServlet extends HttpServlet {
             String typeOfCustomerIdAdd = (request.getParameter("typeOfCustomerIdAdd"));
 
             String customerNameAdd = request.getParameter("customerNameAdd");
-            if (!Validator.regex(REGEX_NAME, customerNameAdd)) {
+            if (!Validator.regex(REGEX_PERSON_NAME, customerNameAdd)) {
                 message += "Invalid name: Please input valid name (ex: An Binh). <br>";
             }
 
