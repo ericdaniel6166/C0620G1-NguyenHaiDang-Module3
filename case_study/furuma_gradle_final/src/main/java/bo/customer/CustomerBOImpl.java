@@ -22,10 +22,10 @@ public class CustomerBOImpl implements CustomerBO {
     public String addCustomer(Customer customer) {
         String message = "";
         boolean customerAdded = false;
-        if (customer.getCustomerId() != null && !Validator.regex(REGEX_SERVICE_NAME, customer.getCustomerId())) {
+        if (!"".equals(customer.getCustomerId()) && !Validator.regex(REGEX_SERVICE_NAME, customer.getCustomerId())) {
             message += "Invalid Customer ID: Customer ID is a positive integer. <br>";
         }
-        if (this.searchCustomerById(customer.getCustomerId()) != null) {
+        if (!"".equals(customer.getCustomerId()) && this.searchCustomerById(customer.getCustomerId()) != null) {
             message += "Invalid Customer ID: Customer ID already exists. <br>";
         }
         if (!Validator.regex(REGEX_PERSON_NAME, customer.getCustomerName())) {

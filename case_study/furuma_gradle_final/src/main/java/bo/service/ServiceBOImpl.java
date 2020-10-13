@@ -26,7 +26,7 @@ public class ServiceBOImpl implements ServiceBO {
         if (service.getServiceId() != "" && !Validator.regex(REGEX_POSITIVE_INTEGER, service.getServiceId())) {
             message += "Invalid Service ID: Service ID is a positive integer. <br>";
         }
-        if (this.searchServiceById(service.getServiceId()) != null) {
+        if (service.getServiceId() != "" && this.searchServiceById(service.getServiceId()) != null) {
             message += "Invalid Service ID: Service ID already exists. <br>";
         }
         if (!Validator.regex(REGEX_SERVICE_NAME, service.getServiceName())) {

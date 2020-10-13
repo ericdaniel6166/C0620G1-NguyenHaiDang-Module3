@@ -12,11 +12,12 @@ import java.util.List;
 public class ProductDAOImpl implements ProductDAO {
     public static final String LIST_PRODUCT_VIEW = "SELECT * FROM view_product;";
     private static final String INSERT_PRODUCT = "INSERT INTO product VALUES (?,?,?,?,?,?,?);";
-    private static final String UPDATE_PRODUCT = "update product set product_name=?,price=?,quantity=?,color_id=?,category_id=?, desciption=? where product_id=?;";
+    private static final String UPDATE_PRODUCT = "update product set product_name=?,price=?,quantity=?,color_id=?,category_id=?, description=? where product_id=?;";
     private static final String DELETE_PRODUCT = "DELETE FROM product WHERE product_id = ?;";
 
-    private static final String SEARCH_PRODUCT_BY_ID_VIEW = "SELECT * FROM product where product_id = ?;";
+    private static final String SEARCH_PRODUCT_BY_ID_VIEW = "SELECT * FROM view_product where product_id = ?;";
     private static final String SEARCH_PRODUCT_BY_NAME_VIEW = "SELECT * FROM view_product WHERE product_name LIKE CONCAT('%',?,'%');";
+    private static final String SEARCH_PRODUCT = "SELECT * FROM view_product WHERE product_name LIKE CONCAT('%', ?, '%') and price like CONCAT('%', ?, '%') and quantity like CONCAT('%', ?, '%') and description like CONCAT('%', ?, '%') and category_name like CONCAT('%', ?, '%') and color_name like CONCAT('%', ?, '%');";
 
     private BaseDAO baseDAO = new BaseDAO();
 
@@ -55,7 +56,7 @@ public class ProductDAOImpl implements ProductDAO {
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(INSERT_PRODUCT);
             String productId = product.getProductId();
-            if (productId != null) {
+            if (!"".equals(productId)) {
                 preparedStatement.setString(1, productId);
             } else {
                 preparedStatement.setString(1, null);
@@ -170,17 +171,38 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<ProductDTO> searchProductByPrice(String price) {
-        return null;
-    }
+    public List<ProductDTO> searchProduct(String productNameSearch, String categoryNameSearch, String colorNameSearch, String priceSearch, String quantitySearch, String descriptionSearch) {
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SEARCH_PRODUCT);
+            preparedStatement.setString(1, productNameSearch);
+            preparedStatement.setString(2, priceSearch);
+            preparedStatement.setString(3, quantitySearch);
+            preparedStatement.setString(4, descriptionSearch);
+            preparedStatement.setString(5, categoryNameSearch);
+            preparedStatement.setString(6, colorNameSearch);
 
-    @Override
-    public List<ProductDTO> searchProductByCategory(String category) {
-        return null;
-    }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String productId = (resultSet.getString("product_id"));
+                String productName = resultSet.getString("product_name");
 
-    @Override
-    public List<ProductDTO> searchProductByColor(String color) {
-        return null;
+                String categoryId = (resultSet.getString("category_id"));
+                String categoryName = resultSet.getString("category_name");
+
+                String colorId = (resultSet.getString("color_id"));
+                String colorName = resultSet.getString("color_name");
+
+
+                String price = resultSet.getString("price");
+                String quantity = resultSet.getString("quantity");
+                String description = resultSet.getString("description");
+                ProductDTO productDTO = new ProductDTO(productId, productName,price,quantity,description,colorId,categoryId,categoryName,colorName);
+                productDTOList.add(productDTO);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productDTOList;
     }
 }

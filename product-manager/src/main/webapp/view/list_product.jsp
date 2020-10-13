@@ -20,7 +20,7 @@
     <%--    cdn font awesome 4.7--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <%--    cdn bootstrap 4.3--%>
+    <%--    cdn bootstrap 4.5.2--%>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
@@ -331,17 +331,18 @@
     <%--    header--%>
     <header class="row">
         <div class="col-12">
-            <h1>Furama Manager</h1>
+            <h1>Product Manager</h1>
             <h3>${message}</h3>
         </div>
     </header>
+
     <%--    search-box--%>
     <div class="row">
         <div class="col-12">
             <div class="search-box">
                 <form action="/list_product?action=search_by_name" method="post">
                     <div class="row">
-                        <input type="text" name="productNameSearch" id="productNameSearch"
+                        <input type="text" name="productNameSearchByName" id="productNameSearchByName"
                                placeholder="Search by Name">
                         <button type="submit" value="submit" class="btn btn-info">
                             <i class="material-icons">search</i>
@@ -372,10 +373,10 @@
                                     <i class="material-icons">view_list</i>
                                     <span>Product List</span>
                                 </a>
-                                <a href="../../index.jsp" class="btn btn-primary">
-                                    <i class="material-icons">home</i>
-                                    <span>Home</span>
-                                </a>
+<%--                                <a href="../../index.jsp" class="btn btn-primary">--%>
+<%--                                    <i class="material-icons">home</i>--%>
+<%--                                    <span>Home</span>--%>
+<%--                                </a>--%>
                             </div>
                         </div>
                     </div>
@@ -388,6 +389,7 @@
                             <th>Color Name</th>
                             <th>Price</th>
                             <th>Quantity</th>
+                            <th>Description</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -403,7 +405,8 @@
                                                '${productDTO.getCategoryName()}',
                                                '${productDTO.getColorName()}',
                                                '${productDTO.getPrice()}',
-                                               '${productDTO.getQuantity()}'
+                                               '${productDTO.getQuantity()}',
+                                               '${productDTO.getDescription()}'
                                                )"
                                     >
                                         <div data-toggle="tooltip" title="View">
@@ -415,6 +418,7 @@
                                 <td>${productDTO.getColorName()}</td>
                                 <td>${productDTO.getPrice()}</td>
                                 <td>${productDTO.getQuantity()}</td>
+                                <td>${productDTO.getDescription()}</td>
                                 <td>
                                     <a href="#editProductModal" class="edit" data-toggle="modal"
                                        onclick="setProductEdit(
@@ -424,12 +428,14 @@
                                                '${productDTO.getColorId()}',
                                                '${productDTO.getPrice()}',
                                                '${productDTO.getQuantity()}',
-                                               )">
-
+                                               '${productDTO.getDescription()}',
+                                               )"
+                                    >
                                         <i class="material-icons" data-toggle="tooltip" title="Edit">mode_edit</i>
                                     </a>
                                     <a href="#deleteProductModal" class="delete" data-toggle="modal"
-                                       onclick="setProductDelete('${productDTO.getProductId()}')">
+                                       onclick="setProductDelete('${productDTO.getProductId()}')"
+                                    >
                                         <i class="material-icons" data-toggle="tooltip" title="Delete">delete</i>
                                     </a>
                                 </td>
@@ -463,7 +469,7 @@
                         <input type="text" class="form-control" name="productNameAdd" id="productNameAdd">
                     </div>
                     <div class="form-group">
-                        <label for="categoryIdAdd">Category ID</label>
+                        <label for="categoryIdAdd">Category Name</label>
                         <select class="form-control" name="categoryIdAdd" id="categoryIdAdd">
                             <c:forEach var="category" items="${requestScope['categoryList']}">
                                 <option value="${category.getCategoryId()}">${category.getCategoryName()}</option>
@@ -471,7 +477,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="colorIdAdd">Color ID</label>
+                        <label for="colorIdAdd">Color Name</label>
                         <select class="form-control" name="colorIdAdd" id="colorIdAdd">
                             <c:forEach var="color" items="${requestScope['colorList']}">
                                 <option value="${color.getColorId()}">${color.getColorName()}</option>
@@ -500,6 +506,7 @@
         </div>
     </div>
 </div>
+
 <!-- Edit Modal HTML -->
 <div id="editProductModal" class="modal fade">
     <div class="modal-dialog">
@@ -519,7 +526,7 @@
                         <input type="text" class="form-control" name="productNameEdit" id="productNameEdit">
                     </div>
                     <div class="form-group">
-                        <label for="categoryIdEdit">Category ID</label>
+                        <label for="categoryIdEdit">Category Name</label>
                         <select class="form-control" name="categoryIdEdit" id="categoryIdEdit">
                             <c:forEach var="category" items="${requestScope['categoryList']}">
                                 <option value="${category.getCategoryId()}">
@@ -529,7 +536,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="colorIdEdit">Color ID</label>
+                        <label for="colorIdEdit">Color Name</label>
                         <select class="form-control" name="colorIdEdit" id="colorIdEdit">
                             <c:forEach var="color" items="${requestScope['colorList']}">
                                 <option value="${color.getColorId()}">
@@ -560,6 +567,7 @@
         </div>
     </div>
 </div>
+
 <!-- Delete Modal HTML -->
 <div id="deleteProductModal" class="modal fade">
     <div class="modal-dialog">
@@ -585,6 +593,7 @@
         </div>
     </div>
 </div>
+
 <%-- View Modal--%>
 <div id="viewProductModal" class="modal fade">
     <div class="modal-dialog">
@@ -632,7 +641,7 @@
 </div>
 
 <script>
-    function setProductView(productId, productName, categoryName, colorName, price, quantity, description ) {
+    function setProductView(productId, productName, categoryName, colorName, price, quantity, description) {
         document.getElementById("productIdView").innerHTML = productId;
         document.getElementById("productNameView").innerHTML = productName;
 
@@ -644,10 +653,7 @@
         document.getElementById("descriptionView").innerHTML = description;
     }
 
-    // Xoá lịch sử lưu trên add modal
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
+
 
 
     function setProductEdit(productId, productName, categoryId, colorId, price, quantity, description) {
@@ -664,6 +670,11 @@
 
     function setProductDelete(productIdDelete) {
         document.getElementById("productIdDelete").value = productIdDelete;
+    }
+
+    // Xoá lịch sử lưu trên add modal
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
     }
 
     $(document).ready(function () {

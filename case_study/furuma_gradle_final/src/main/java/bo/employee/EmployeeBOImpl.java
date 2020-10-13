@@ -23,10 +23,10 @@ public class EmployeeBOImpl implements EmployeeBO {
     public String addEmployee(Employee employee) {
         String message = "";
         boolean employeeAdded = false;
-        if (employee.getEmployeeId() != null && !Validator.regex(REGEX_SERVICE_NAME, employee.getEmployeeId())) {
+        if (!"".equals(employee.getEmployeeId()) && !Validator.regex(REGEX_SERVICE_NAME, employee.getEmployeeId())) {
             message += "Invalid Employee ID: Employee ID is a positive integer. <br>";
         }
-        if (this.searchEmployeeById(employee.getEmployeeId()) != null) {
+        if (!"".equals(employee.getEmployeeId()) && this.searchEmployeeById(employee.getEmployeeId()) != null) {
             message += "Invalid Employee ID: Employee ID already exists. <br>";
         }
         if (!Validator.regex(REGEX_PERSON_NAME, employee.getEmployeeName())) {

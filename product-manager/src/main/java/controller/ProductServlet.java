@@ -19,7 +19,7 @@ import java.util.List;
 public class ProductServlet extends HttpServlet {
     private CategoryBO categoryBO = new CategoryBOImpl();
     private ColorBO colorBO = new ColorBOImpl();
-    private ProductBO productBO= new ProductBOImpl();
+    private ProductBO productBO = new ProductBOImpl();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
@@ -41,8 +41,50 @@ public class ProductServlet extends HttpServlet {
                 break;
             case "search_by_name":
                 searchProductByName(request, response);
+                break;
+            case "search":
+                searchProduct(request, response);
+
             default:
                 break;
+        }
+    }
+
+    private void searchProduct(HttpServletRequest request, HttpServletResponse response) {
+        boolean productSearched = false;
+        String message = "";
+        List<ProductDTO> productDTOList = null;
+        try {
+            String productNameSearch = request.getParameter("productNameSearch");
+            String priceSearch = request.getParameter("priceSearch");
+            String quantitySearch = request.getParameter("quantitySearch");
+            String descriptionSearch = request.getParameter("descriptionSearch");
+            String categoryNameSearch = request.getParameter("categoryNameSearch");
+            String colorNameSearch = request.getParameter("colorNameSearch");
+
+
+            productDTOList = this.productBO.searchProduct(productNameSearch, categoryNameSearch, colorNameSearch, priceSearch, quantitySearch, descriptionSearch);
+            if (productDTOList.size() == 0) {
+                message += "Product Name " + '"' + productNameSearch + '"' + " is not found";
+            } else {
+                message = "Product Name " + '"' + productNameSearch + '"';
+            }
+
+            request.setAttribute("productDTOList", productDTOList);
+            request.setAttribute("message", message);
+
+            List<Category> categoryList = this.categoryBO.listCategory();
+            request.setAttribute("categoryList", categoryList);
+
+            List<Color> colorList = this.colorBO.listColor();
+            request.setAttribute("colorList", colorList);
+
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("view/list_product.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -51,7 +93,7 @@ public class ProductServlet extends HttpServlet {
         String message = "";
         List<ProductDTO> productDTOList = null;
         try {
-            String productNameSearch = request.getParameter("productNameSearch");
+            String productNameSearch = request.getParameter("productNameSearchByName");
             productDTOList = this.productBO.searchProductByName(productNameSearch);
             if (productDTOList == null) {
                 message += "Product Name " + '"' + productNameSearch + '"' + " is not found";
@@ -93,7 +135,7 @@ public class ProductServlet extends HttpServlet {
             String descriptionEdit = request.getParameter("descriptionEdit");
 
 
-            Product product = new Product(productIdEdit,productNameEdit,priceEdit,quantityEdit,descriptionEdit,colorIdEdit,categoryIdEdit);
+            Product product = new Product(productIdEdit, productNameEdit, priceEdit, quantityEdit, descriptionEdit, colorIdEdit, categoryIdEdit);
             message = this.productBO.editProduct(product);
 
             request.setAttribute("message", message);
@@ -125,7 +167,6 @@ public class ProductServlet extends HttpServlet {
             String productNameAdd = request.getParameter("productNameAdd");
 
             String categoryIdAdd = (request.getParameter("categoryIdAdd"));
-
             String colorIdAdd = (request.getParameter("colorIdAdd"));
 
             String priceAdd = request.getParameter("priceAdd");
@@ -133,7 +174,7 @@ public class ProductServlet extends HttpServlet {
             String quantityAdd = request.getParameter("quantityAdd");
             String descriptionAdd = request.getParameter("descriptionAdd");
 
-            Product product = new Product(productIdAdd, productNameAdd, priceAdd,quantityAdd,descriptionAdd,colorIdAdd,categoryIdAdd);
+            Product product = new Product(productIdAdd, productNameAdd, priceAdd, quantityAdd, descriptionAdd, colorIdAdd, categoryIdAdd);
             message = this.productBO.addProduct(product);
 
             request.setAttribute("message", message);

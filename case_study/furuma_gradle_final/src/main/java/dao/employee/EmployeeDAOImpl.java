@@ -61,7 +61,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(INSERT_EMPLOYEE);
             String employeeId = employee.getEmployeeId();
-            if (employeeId != null) {
+            if (employeeId != "") {
                 preparedStatement.setString(1, employeeId);
             } else {
                 preparedStatement.setString(1, null);

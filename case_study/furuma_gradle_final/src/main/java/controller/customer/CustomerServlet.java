@@ -4,7 +4,6 @@ import bo.customer.CustomerBO;
 import bo.customer.CustomerBOImpl;
 import bo.customer.TypeOfCustomerBO;
 import bo.customer.TypeOfCustomerBOImpl;
-import common.Validator;
 import dto.customer.CustomerDTO;
 import model.customer.Customer;
 import model.customer.TypeOfCustomer;
@@ -17,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-
-import static common.Validator.*;
 
 @WebServlet(name = "CustomerServlet", urlPatterns = "/list_customer")
 public class CustomerServlet extends HttpServlet {
@@ -185,27 +182,27 @@ public class CustomerServlet extends HttpServlet {
             String typeOfCustomerIdAdd = (request.getParameter("typeOfCustomerIdAdd"));
 
             String customerNameAdd = request.getParameter("customerNameAdd");
-            if (!Validator.regex(REGEX_PERSON_NAME, customerNameAdd)) {
-                message += "Invalid name: Please input valid name (ex: An Binh). <br>";
-            }
+//            if (!Validator.regex(REGEX_PERSON_NAME, customerNameAdd)) {
+//                message += "Invalid name: Please input valid name (ex: An Binh). <br>";
+//            }
 
             String dateOfBirthAdd = request.getParameter("dateOfBirthAdd");
 
             String idNumberAdd = request.getParameter("idNumberAdd");
-            if (!Validator.regex(REGEX_ID_NUMBER, idNumberAdd)) {
-                message += "Invalid ID Number: ID Number must be 9 or 12 digits. <br>";
-            }
+//            if (!Validator.regex(REGEX_ID_NUMBER, idNumberAdd)) {
+//                message += "Invalid ID Number: ID Number must be 9 or 12 digits. <br>";
+//            }
 
 
             String phoneAdd = request.getParameter("phoneAdd");
-            if (!Validator.regex(REGEX_PHONE, phoneAdd)) {
-                message += "Invalid Phone: Phone must be 090xxxxxxx or 091xxxxxxx or (84)+90xxxxxxx or (84)+91xxxxxxx. <br>";
-            }
+//            if (!Validator.regex(REGEX_PHONE, phoneAdd)) {
+//                message += "Invalid Phone: Phone must be 090xxxxxxx or 091xxxxxxx or (84)+90xxxxxxx or (84)+91xxxxxxx. <br>";
+//            }
 
             String emailAdd = request.getParameter("emailAdd");
-            if (!Validator.regex(REGEX_EMAIL, emailAdd)) {
-                message += "Invalid Email: Please input valid email (ex: abc_abc.abc@abc.abc.abc). <br>";
-            }
+//            if (!Validator.regex(REGEX_EMAIL, emailAdd)) {
+//                message += "Invalid Email: Please input valid email (ex: abc_abc.abc@abc.abc.abc). <br>";
+//            }
 
             String addressAdd = request.getParameter("addressAdd");
 

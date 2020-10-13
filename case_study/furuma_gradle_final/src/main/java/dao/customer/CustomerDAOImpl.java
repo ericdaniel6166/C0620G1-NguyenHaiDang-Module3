@@ -55,7 +55,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(INSERT_CUSTOMER);
             String customerId = customer.getCustomerId();
-            if (customerId != null) {
+            if (customerId != "") {
                 preparedStatement.setString(1, customerId);
             } else {
                 preparedStatement.setString(1, null);
